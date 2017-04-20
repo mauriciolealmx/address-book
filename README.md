@@ -12,7 +12,7 @@ You will need the following things properly installed on your computer.
 
 ## Installation
 
-* `git clone <repository-url>`
+* `git clone https://mlealvillarreal@bitbucket.org/mlealvillarreal/address-book.git`
 * cd into address-book
 * `npm install`
 
