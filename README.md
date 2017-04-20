@@ -12,7 +12,7 @@ You will need the following things properly installed on your computer.
 
 ## Installation
 
-* `git clone https://mlealvillarreal@bitbucket.org/mlealvillarreal/address-book.git`
+* `git clone <Repo url>`
 * cd into address-book
 * `npm install`
 
@@ -20,9 +20,6 @@ You will need the following things properly installed on your computer.
 
 * `npm run mystart`
 * Visit your app at [http://localhost:5000](http://localhost:5000).
-
-### Running Tests
-
 
 
 ### Building
