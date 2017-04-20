@@ -1,0 +1,8 @@
+{
+  "name": "address-book",
+  "description": "",
+  "repository": "https://mlealvillarreal@bitbucket.org/mlealvillarreal/address-book.git",
+  "logo": "http://node-js-sample.herokuapp.com/node.svg",
+  "keywords": ["node", "express"],
+  "image": "heroku/nodejs"
+}

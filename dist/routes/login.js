@@ -1,0 +1,46 @@
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.login = undefined;
+
+var _config = require('../../config');
+
+var _config2 = _interopRequireDefault(_config);
+
+var _cryptoUtils = require('../helpers/crypto-utils');
+
+var _postgresQuerys = require('../helpers/postgres-querys');
+
+var _jwtToken = require('../middlewares/jwt-token');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var login = function login(req, res) {
+  var _req$body = req.body,
+      email = _req$body.email,
+      password = _req$body.password;
+
+  var encryptedPass = (0, _cryptoUtils.cipher)(password, _config2.default.key);
+  var userCredentials = { email: email, encryptedPass: encryptedPass };
+
+  // Authenticate function will verify user credentials.
+  (0, _postgresQuerys.getUserByEmail)(email).then(function (result) {
+    var dbPassword = result && result[0] && result[0].password;
+
+    if (!!result && encryptedPass === dbPassword) {
+      console.log(userCredentials);
+      var token = (0, _jwtToken.assignToken)(userCredentials);
+      var resJSON = { email: email, token: token };
+      return res.status(200).send(resJSON);
+    } else {
+      return res.status(404).send({ message: 'Did not find a matching member for given email' });
+    }
+  }).catch(function (err) {
+    console.log(err);
+    return res.status(500).json({ success: false, data: err });
+  });
+};
+
+exports.login = login;
