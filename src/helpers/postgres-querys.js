@@ -36,7 +36,6 @@ let createUser = (req, res) => {
       // Handle connection errors
       if (err) {
         done();
-        console.log(err);
         return res.status(500).json({success: false, data: err});
       }
       // SQL Query > Insert Data

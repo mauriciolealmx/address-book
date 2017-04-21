@@ -10,18 +10,18 @@ let login = (req, res) => {
   
   // Authenticate function will verify user credentials.
   getUserByEmail(email).then( (result) => {
-    let dbPassword = result && result[0] && result[0].password;
-
-    if (!!result && encryptedPass === dbPassword) {
-      console.log(userCredentials);
-      let token = assignToken(userCredentials);
-      let resJSON = { email, token };
-      return res.status(200).send(resJSON);
-    } else {
-      return res.status(404).send({message: 'Did not find a matching member for given email'});
+    if (result) {
+      let dbPassword = result[0] && result[0].password;
+      // If encrypted password is equal to the one in postgreSQL.
+      if (encryptedPass === dbPassword) {
+        let token = assignToken(userCredentials);
+        let resJSON = { email, token };
+        return res.status(200).send(resJSON);
+      } else {
+        return res.status(404).send('Not Found');
+      }
     }
   }).catch( (err) => {
-    console.log(err)
     return res.status(500).json({success: false, data: err});
   }) 
 }

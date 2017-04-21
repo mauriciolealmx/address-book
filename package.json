@@ -11,8 +11,8 @@
     "build": "babel src -d dist ",
     "start:live": "nodemon ./src/index.js --exec babel-node -- --presets=es2015",
     "start": "node ./dist/index",
-    "test": "mocha ./test/top.js --compilers js:babel-register",
-    "test:live": "mocha ./test/top.js --compilers js:babel-register --watch"
+    "test": "TESTING=true mocha ./test/top.js --compilers js:babel-register --timeout 15000",
+    "test:live": "TESTING=true mocha ./test/top.js --compilers js:babel-register --watch --timeout 15000"
   },
   "repository": {
     "type": "git",

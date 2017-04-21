@@ -13,7 +13,7 @@ let isValidToken = (req, res, next) => {
           console.log(err);
           return res.redirect('/login');
         } else {
-          // if everything is good, save to request for use in other routes
+          // If token is valid attach decoded to req for possible use in routes. 
           req.decoded = decoded;
           return next();
         }
