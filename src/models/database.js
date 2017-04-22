@@ -1,7 +1,7 @@
 import pg from 'pg';
 import config from '../../config';
 
-const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/mleal';
+const connectionString = process.env.DATABASE_URL || config.connectionString;
 const client = new pg.Client(connectionString);
 
 client.connect();

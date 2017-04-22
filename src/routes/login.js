@@ -3,9 +3,11 @@ import { cipher } from '../helpers/crypto-utils';
 import { getUserByEmail } from '../helpers/postgres-querys';
 import { assignToken } from '../middlewares/jwt-token';
 
+const KEY = process.env.KEY || config.key;
+
 let login = (req, res) => {
   let { email, password } = req.body;
-  let encryptedPass = cipher(password, config.key);
+  let encryptedPass = cipher(password, KEY);
   let userCredentials = { email, encryptedPass };
   
   // Authenticate function will verify user credentials.

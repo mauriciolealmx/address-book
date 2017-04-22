@@ -1,8 +1,7 @@
 module.exports={
-  "prodConnectionString" : 'postgres://zkdaefmgwacorb:c6d10428c6866d62a83535fe1504310d9128e85f93bab7864494a15749d2331e@ec2-23-23-222-147.compute-1.amazonaws.com:5432/daijm0299g9reb',
   "connectionString" : 'postgres://localhost:5432/mleal',
-  "jwt_secret": "Im Mauricio",
-  "key": 'Id0d3v',
+  "jwt_secret": "-secret-",
+  "key": '-secret-',
   "EXPIRES_IN": '24h',
   "databaseURL":"https://friendlychat-e6797.firebaseio.com/"
 }

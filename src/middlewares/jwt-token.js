@@ -1,14 +1,16 @@
 import config from '../../config';
 import jwt from 'jsonwebtoken';
 
+const SECRET = process.env.JWT_SECRET || config.jwt_secret;
+
 let isValidToken = (req, res, next) => {
   return (req, res, next) => {
     let { body, query, headers } = req;
     let token = body.token || query.token || headers['x-access-token'];
-    
+
 
     if (token) {
-      jwt.verify(token, config.jwt_secret, (err, decoded) => {
+      jwt.verify(token, SECRET, (err, decoded) => {
         if (err) {
           console.log(err);
           return res.redirect('/login');
@@ -25,7 +27,7 @@ let isValidToken = (req, res, next) => {
 }
 
 let assignToken = (userCredentials) => {
-  return jwt.sign(userCredentials, config.jwt_secret, {
+  return jwt.sign(userCredentials, SECRET, {
     expiresIn: config.EXPIRES_IN
   });
 };

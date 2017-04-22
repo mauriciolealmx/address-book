@@ -6,6 +6,7 @@ import { assignToken } from '../middlewares/jwt-token';
 
 const IS_MISSING = 'is missing';
 const NOT_VALID = 'is not valid';
+const KEY = process.env.KEY || config.key;
 
 let isValidPassword = (password) => {
   return /^[A-Za-z\\d!@#$%^&*]{6,20}$/.test(password);
@@ -33,7 +34,7 @@ let register = (req, res) => {
     return res.status(400).send(`Bad Request, ${invalid}`);
   } 
 
-  encryptedPass = cipher(password, config.key);
+  encryptedPass = cipher(password, KEY);
   req.encryptedPass = encryptedPass;
   let userCredentials = { email, encryptedPass };
 
