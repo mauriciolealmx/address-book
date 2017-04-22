@@ -13,7 +13,7 @@ You will need the following things properly installed on your computer.
 
 * [Git](http://git-scm.com/)
 * [Node.js](http://nodejs.org/) (with NPM)
-* [PostgreSQL](https://www.postgresql.org/download/) (with NPM)
+* [PostgreSQL](https://www.postgresql.org/download/)
 
 
 ## Installation
