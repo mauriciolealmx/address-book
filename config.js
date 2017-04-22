@@ -3,5 +3,5 @@ module.exports={
   "jwt_secret": "-secret-",
   "key": '-secret-',
   "EXPIRES_IN": '24h',
-  "databaseURL":"https://friendlychat-e6797.firebaseio.com/"
+  "databaseURL":"https://address-book-b4923.firebaseio.com/"
 }
