@@ -2,8 +2,7 @@ import config from '../../config';
 import Promise from 'bluebird';
 import pg from 'pg';
 
-const ENV = process.env.NODE_ENV;
-const connectionString = ENV === 'production' ? config.connectionString : config.prodConnectionString;
+const connectionString = process.env.DATABASE_URL;
 
 let getUserByEmail = (email) => {
   return new Promise(function(resolve) {
