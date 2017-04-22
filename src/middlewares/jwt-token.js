@@ -8,7 +8,6 @@ let isValidToken = (req, res, next) => {
     let { body, query, headers } = req;
     let token = body.token || query.token || headers['x-access-token'];
 
-
     if (token) {
       jwt.verify(token, SECRET, (err, decoded) => {
         if (err) {
