@@ -11,6 +11,12 @@ module.exports = (app, express) => {
   *  method: GET
   *  uri: '/login'
   */
+  app.get('/api', (req, res) => res.render('pages/api') );  /**
+  
+  *  Handling: Unauthorized users (Not logged in user or not registered user).
+  *  method: GET
+  *  uri: '/login'
+  */
   app.get('/login', (req, res) => res.json({message: 'This is the authentication route. A login form should be rendered'}) );
 
   /**

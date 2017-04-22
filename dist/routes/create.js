@@ -19,6 +19,7 @@ var _firebaseQuerys = require('../helpers/firebase-querys');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// TODO: User B should not be able to create contacts with user's A jwt Token.
 var create = function create(req, res) {
   var userId = req.params.userId;
 
