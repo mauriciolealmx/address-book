@@ -21,6 +21,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var IS_MISSING = 'is missing';
 var NOT_VALID = 'is not valid';
+var KEY = process.env.KEY || _config2.default.key;
 
 var isValidPassword = function isValidPassword(password) {
   return (/^[A-Za-z\\d!@#$%^&*]{6,20}$/.test(password)
@@ -52,7 +53,7 @@ var register = function register(req, res) {
     return res.status(400).send('Bad Request, ' + invalid);
   }
 
-  encryptedPass = (0, _cryptoUtils.cipher)(password, _config2.default.key);
+  encryptedPass = (0, _cryptoUtils.cipher)(password, KEY);
   req.encryptedPass = encryptedPass;
   var userCredentials = { email: email, encryptedPass: encryptedPass };
 

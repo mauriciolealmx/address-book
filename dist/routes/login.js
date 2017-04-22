@@ -17,12 +17,14 @@ var _jwtToken = require('../middlewares/jwt-token');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var KEY = process.env.KEY || _config2.default.key;
+
 var login = function login(req, res) {
   var _req$body = req.body,
       email = _req$body.email,
       password = _req$body.password;
 
-  var encryptedPass = (0, _cryptoUtils.cipher)(password, _config2.default.key);
+  var encryptedPass = (0, _cryptoUtils.cipher)(password, KEY);
   var userCredentials = { email: email, encryptedPass: encryptedPass };
 
   // Authenticate function will verify user credentials.

@@ -40,8 +40,6 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// TODO: Need to set up pg database in heroku. It only works locally.
-
 admin.initializeApp({
   credential: admin.credential.cert(_friendlychatE6797FirebaseAdminsdkLodwb00432c3d2.default),
   databaseURL: _config2.default.databaseURL

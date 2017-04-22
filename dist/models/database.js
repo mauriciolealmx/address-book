@@ -10,7 +10,7 @@ var _config2 = _interopRequireDefault(_config);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/mleal';
+var connectionString = process.env.DATABASE_URL || _config2.default.connectionString;
 var client = new _pg2.default.Client(connectionString);
 
 client.connect();

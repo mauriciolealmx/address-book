@@ -19,7 +19,7 @@ var _pg2 = _interopRequireDefault(_pg);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var connectionString = process.env.DATABASE_URL;
+var connectionString = process.env.DATABASE_URL || _config2.default.connectionString;
 
 var getUserByEmail = function getUserByEmail(email) {
   return new _bluebird2.default(function (resolve) {

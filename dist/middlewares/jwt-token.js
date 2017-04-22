@@ -15,6 +15,8 @@ var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var SECRET = process.env.JWT_SECRET || _config2.default.jwt_secret;
+
 var isValidToken = function isValidToken(req, res, next) {
   return function (req, res, next) {
     var body = req.body,
@@ -24,7 +26,7 @@ var isValidToken = function isValidToken(req, res, next) {
     var token = body.token || query.token || headers['x-access-token'];
 
     if (token) {
-      _jsonwebtoken2.default.verify(token, _config2.default.jwt_secret, function (err, decoded) {
+      _jsonwebtoken2.default.verify(token, SECRET, function (err, decoded) {
         if (err) {
           console.log(err);
           return res.redirect('/login');
@@ -41,7 +43,7 @@ var isValidToken = function isValidToken(req, res, next) {
 };
 
 var assignToken = function assignToken(userCredentials) {
-  return _jsonwebtoken2.default.sign(userCredentials, _config2.default.jwt_secret, {
+  return _jsonwebtoken2.default.sign(userCredentials, SECRET, {
     expiresIn: _config2.default.EXPIRES_IN
   });
 };
