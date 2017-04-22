@@ -40,6 +40,8 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// TODO: Need to set up pg database in heroku. It only works locally.
+
 admin.initializeApp({
   credential: admin.credential.cert(_friendlychatE6797FirebaseAdminsdkLodwb00432c3d2.default),
   databaseURL: _config2.default.databaseURL
@@ -48,11 +50,6 @@ admin.initializeApp({
 var db = admin.database();
 var ref = db.ref('address-book/data');
 var usersRef = ref.child('users');
-
-usersRef.on('value', function (data) {
-  var val = data.val();
-  console.log(val);
-});
 
 var app = (0, _express2.default)();
 app.set('port', process.env.PORT || 5000);
@@ -65,6 +62,7 @@ app.set('view engine', 'ejs');
 app.set('config', _config2.default);
 
 // Middleware
+app.disable('x-powered-by');
 app.use((0, _cookieParser2.default)());
 app.use(_bodyParser2.default.urlencoded({ extended: false }));
 app.use(function (req, res, next) {
@@ -77,6 +75,10 @@ app.use(function (req, res, next) {
 // Routes
 require('./routes/routes')(app, _express2.default);
 
-app.listen(app.get('port'), function () {
-  console.log('Node app is running on port', app.get('port'));
+var server = app.listen(app.get('port'), function () {
+  if (!process.env.TESTING) {
+    console.log('Node app is running on port', app.get('port'));
+  }
 });
+
+module.exports = server;

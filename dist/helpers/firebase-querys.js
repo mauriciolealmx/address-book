@@ -19,6 +19,17 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 var DB = admin.database();
 var REF = DB.ref('address-book/data');
+var MAX_FIELD_LENGTH = 50;
+
+var are20CharMax = function are20CharMax() {
+  for (var _len = arguments.length, fields = Array(_len), _key = 0; _key < _len; _key++) {
+    fields[_key] = arguments[_key];
+  }
+
+  return fields.every(function (field) {
+    return field.length <= MAX_FIELD_LENGTH;
+  });
+};
 
 var saveUserToFirebase = function saveUserToFirebase(email) {
   var usersRef = REF.child('users');
@@ -27,20 +38,35 @@ var saveUserToFirebase = function saveUserToFirebase(email) {
   return;
 };
 
+var doesExist = function doesExist(userId) {
+  return new _bluebird2.default(function (resolve) {
+    var userRef = REF.child('users/' + userId);
+    userRef.once('value', function (snap) {
+      return resolve(snap.val());
+    });
+  });
+};
+
 var addContact = function addContact(userId, _ref) {
   var firstName = _ref.firstName,
       lastName = _ref.lastName,
       email = _ref.email;
 
-  var contactsRef = REF.child('users/' + userId + '/contacts');
-  return new _bluebird2.default(function (resolve) {
-
-    var contactRef = contactsRef.child(firstName + ' ' + lastName);
-    contactRef.set({ firstName: firstName, lastName: lastName, email: email });
-
-    // Retrieve added contact.
-    contactRef.on('value', function (snap) {
-      return resolve(snap.val());
+  return doesExist(userId).then(function (doesExist) {
+    if (!doesExist) {
+      return _bluebird2.default.reject('Not Found');
+    }
+    var contactsRef = REF.child('users/' + userId + '/contacts');
+    return new _bluebird2.default(function (resolve, reject) {
+      if (!are20CharMax(firstName, lastName, email)) {
+        return reject('Fields should not contain more than 20 characters');
+      }
+      var contactRef = contactsRef.child(firstName + ' ' + lastName);
+      contactRef.set({ firstName: firstName, lastName: lastName, email: email });
+      // Retrieve added contact.
+      contactRef.on('value', function (snap) {
+        return resolve(snap.val());
+      });
     });
   });
 };

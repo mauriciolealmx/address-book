@@ -19,7 +19,7 @@ var _pg2 = _interopRequireDefault(_pg);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var connectionString = _config2.default.connectionString;
+var connectionString = process.env.DATABASE_URL;
 
 var getUserByEmail = function getUserByEmail(email) {
   return new _bluebird2.default(function (resolve) {
@@ -56,7 +56,6 @@ var createUser = function createUser(req, res) {
       // Handle connection errors
       if (err) {
         done();
-        console.log(err);
         return res.status(500).json({ success: false, data: err });
       }
       // SQL Query > Insert Data

@@ -23,7 +23,17 @@ var create = function create(req, res) {
   var userId = req.params.userId;
 
   (0, _firebaseQuerys.addContact)(userId, req.body).then(function (response) {
-    return res.status(201).send(response);
+    console.log('What did I get', response);
+    if (response) {
+      return res.status(201).send(response);
+    } else {
+      return res.status(404).send('Not Found');
+    }
+  }).catch(function (err) {
+    if (err) {
+      console.log('Im tired', err);
+      return res.status(404).send(err);
+    }
   });
 };
 

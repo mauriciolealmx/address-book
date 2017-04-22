@@ -27,18 +27,18 @@ var login = function login(req, res) {
 
   // Authenticate function will verify user credentials.
   (0, _postgresQuerys.getUserByEmail)(email).then(function (result) {
-    var dbPassword = result && result[0] && result[0].password;
-
-    if (!!result && encryptedPass === dbPassword) {
-      console.log(userCredentials);
-      var token = (0, _jwtToken.assignToken)(userCredentials);
-      var resJSON = { email: email, token: token };
-      return res.status(200).send(resJSON);
-    } else {
-      return res.status(404).send({ message: 'Did not find a matching member for given email' });
+    if (result) {
+      var dbPassword = result[0] && result[0].password;
+      // If encrypted password is equal to the one in postgreSQL.
+      if (encryptedPass === dbPassword) {
+        var token = (0, _jwtToken.assignToken)(userCredentials);
+        var resJSON = { email: email, token: token };
+        return res.status(200).send(resJSON);
+      } else {
+        return res.status(404).send('Not Found');
+      }
     }
   }).catch(function (err) {
-    console.log(err);
     return res.status(500).json({ success: false, data: err });
   });
 };

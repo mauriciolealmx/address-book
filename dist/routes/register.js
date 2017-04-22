@@ -19,6 +19,19 @@ var _jwtToken = require('../middlewares/jwt-token');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var IS_MISSING = 'is missing';
+var NOT_VALID = 'is not valid';
+
+var isValidPassword = function isValidPassword(password) {
+  return (/^[A-Za-z\\d!@#$%^&*]{6,20}$/.test(password)
+  );
+};
+
+var isValidEmail = function isValidEmail(email) {
+  var regex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return regex.test(email);
+};
+
 var isEmailRegistered = function isEmailRegistered(email) {
   return (0, _postgresQuerys.getUserByEmail)(email).then(function (result) {
     return result.length > 0;
@@ -30,10 +43,18 @@ var register = function register(req, res) {
       email = _req$body.email,
       password = _req$body.password;
 
-  var encryptedPass = (0, _cryptoUtils.cipher)(password, _config2.default.key);
-  var userCredentials = { email: email, encryptedPass: encryptedPass };
+  var encryptedPass = void 0;
+  if (!password || !email) {
+    var missing = !email ? 'email ' + IS_MISSING : 'password ' + IS_MISSING;
+    return res.status(400).send('Bad Request, ' + missing);
+  } else if (!isValidEmail(email) || !isValidPassword(password)) {
+    var invalid = !isValidEmail(email) ? 'email ' + NOT_VALID : 'password ' + NOT_VALID;
+    return res.status(400).send('Bad Request, ' + invalid);
+  }
 
+  encryptedPass = (0, _cryptoUtils.cipher)(password, _config2.default.key);
   req.encryptedPass = encryptedPass;
+  var userCredentials = { email: email, encryptedPass: encryptedPass };
 
   isEmailRegistered(email).then(function (isRegistered) {
     if (isRegistered) {
