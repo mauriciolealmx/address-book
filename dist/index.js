@@ -32,16 +32,16 @@ var _firebaseAdmin = require('firebase-admin');
 
 var admin = _interopRequireWildcard(_firebaseAdmin);
 
-var _friendlychatE6797FirebaseAdminsdkLodwb00432c3d = require('../friendlychat-e6797-firebase-adminsdk-lodwb-00432c3d93.json');
+var _addressBookB4923FirebaseAdminsdk70gx68382c02c = require('../address-book-b4923-firebase-adminsdk-70gx6-8382c02c12.json');
 
-var _friendlychatE6797FirebaseAdminsdkLodwb00432c3d2 = _interopRequireDefault(_friendlychatE6797FirebaseAdminsdkLodwb00432c3d);
+var _addressBookB4923FirebaseAdminsdk70gx68382c02c2 = _interopRequireDefault(_addressBookB4923FirebaseAdminsdk70gx68382c02c);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 admin.initializeApp({
-  credential: admin.credential.cert(_friendlychatE6797FirebaseAdminsdkLodwb00432c3d2.default),
+  credential: admin.credential.cert(_addressBookB4923FirebaseAdminsdk70gx68382c02c2.default),
   databaseURL: _config2.default.databaseURL
 });
 
