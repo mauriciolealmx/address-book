@@ -5,7 +5,7 @@ import pg from 'pg';
 const connectionString = process.env.DATABASE_URL || config.connectionString;
 
 let getUserByEmail = (email) => {
-  return new Promise(function(resolve) {
+  return new Promise( (resolve) => {
     pg.connect(connectionString, (err, client, done) => {
       // Handle connection errors
       if (err) {
@@ -23,7 +23,7 @@ let getUserByEmail = (email) => {
 };
 
 let createUser = (req, res) => {
-  return new Promise(function(resolve, reject) {
+  return new Promise( (resolve, reject) => {
     const results = [];
     let { email } = req.body;
     let { encryptedPass } = req;
