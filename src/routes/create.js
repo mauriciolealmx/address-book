@@ -8,7 +8,6 @@ import { saveUserToFirebase, addContact } from '../helpers/firebase-querys';
 let create = (req, res) => {
   let { userId } = req.params;
   addContact(userId, req.body).then( (response) => {
-    console.log('What did I get', response);
     if (response) {
       return res.status(201).send(response);
     } else {
@@ -16,7 +15,6 @@ let create = (req, res) => {
     }
   }).catch( (err) => {
     if (err) {
-      console.log('Im tired', err);
       return res.status(404).send(err);
     }
   });
