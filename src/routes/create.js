@@ -1,8 +1,4 @@
-import config from '../../config';
-import { cipher } from '../helpers/crypto-utils';
-import { assignToken } from '../middlewares/jwt-token';
-import { getUserByEmail, createUser } from '../helpers/postgres-querys';
-import { saveUserToFirebase, addContact } from '../helpers/firebase-querys';
+import { addContact } from '../helpers/firebase-querys';
 
 // TODO: User B should not be able to create contacts with user's A jwt Token.
 let create = (req, res) => {
