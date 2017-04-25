@@ -24,7 +24,7 @@ module.exports = function (app, express) {
       *  uri: '/login'
       */
   app.get('/login', function (req, res) {
-    return res.json({ message: 'This is the authentication route. A login form should be rendered' });
+    return res.redirect('/api');
   });
 
   /**
