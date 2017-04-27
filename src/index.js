@@ -43,7 +43,7 @@ app.use( (req, res, next) => {
 // Routes
 require('./routes/routes')(app, express);
 
-let server = app.listen(app.get('port'), function() {
+let server = app.listen(app.get('port'), () => {
   if( !process.env.TESTING ) {
     console.log('Node app is running on port', app.get('port'));
   }
