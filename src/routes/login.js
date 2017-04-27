@@ -13,10 +13,11 @@ let login = (req, res) => {
   getUserByEmail(email).then( (result) => {
     if (result) {
       let dbPassword = result[0] && result[0].password;
+      let id = result[0].id;
       // If encrypted password is equal to the one in postgreSQL.
       if (encryptedPass === dbPassword) {
         let token = assignToken({ email, password });
-        let resJSON = { email, token };
+        let resJSON = { id, email, token };
         return res.status(200).send(resJSON);
       } else {
         return res.status(404).send('Not Found');

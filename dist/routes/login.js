@@ -30,10 +30,11 @@ var login = function login(req, res) {
   (0, _postgresQuerys.getUserByEmail)(email).then(function (result) {
     if (result) {
       var dbPassword = result[0] && result[0].password;
+      var id = result[0].id;
       // If encrypted password is equal to the one in postgreSQL.
       if (encryptedPass === dbPassword) {
         var token = (0, _jwtToken.assignToken)({ email: email, password: password });
-        var resJSON = { email: email, token: token };
+        var resJSON = { id: id, email: email, token: token };
         return res.status(200).send(resJSON);
       } else {
         return res.status(404).send('Not Found');
