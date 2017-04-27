@@ -60,8 +60,8 @@ var register = function register(req, res) {
     }
     var token = (0, _jwtToken.assignToken)({ email: email, password: password });
 
-    (0, _firebaseQuerys.saveUserToFirebase)(email);
     (0, _postgresQuerys.createUser)(email, encryptedPass).then(function (response) {
+      (0, _firebaseQuerys.saveUserToFirebase)(response[0].id);
       var user = response[0];
       return res.status(201).send(user);
     });

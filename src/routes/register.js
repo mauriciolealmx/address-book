@@ -41,8 +41,8 @@ let register = (req, res) => {
     }
     let token = assignToken({ email, password});
 
-    saveUserToFirebase(email);
     createUser(email, encryptedPass).then( (response) => {
+      saveUserToFirebase(response[0].id);
       let user = response[0];
       return res.status(201).send(user);
     });
