@@ -25,7 +25,6 @@ var login = function login(req, res) {
       password = _req$body.password;
 
   var encryptedPass = (0, _cryptoUtils.cipher)(password, KEY);
-  var userCredentials = { email: email, encryptedPass: encryptedPass };
 
   // Authenticate function will verify user credentials.
   (0, _postgresQuerys.getUserByEmail)(email).then(function (result) {
@@ -33,7 +32,7 @@ var login = function login(req, res) {
       var dbPassword = result[0] && result[0].password;
       // If encrypted password is equal to the one in postgreSQL.
       if (encryptedPass === dbPassword) {
-        var token = (0, _jwtToken.assignToken)(userCredentials);
+        var token = (0, _jwtToken.assignToken)({ email: email, password: password });
         var resJSON = { email: email, token: token };
         return res.status(200).send(resJSON);
       } else {

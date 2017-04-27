@@ -55,18 +55,16 @@ var register = function register(req, res) {
 
   encryptedPass = (0, _cryptoUtils.cipher)(password, KEY);
   req.encryptedPass = encryptedPass;
-  var userCredentials = { email: email, encryptedPass: encryptedPass };
 
   isEmailRegistered(email).then(function (isRegistered) {
     if (isRegistered) {
       return res.status(400).send({ error: 'Email is already registered' });
     }
-    var token = (0, _jwtToken.assignToken)(userCredentials);
+    var token = (0, _jwtToken.assignToken)({ email: email, password: password });
 
     (0, _firebaseQuerys.saveUserToFirebase)(email);
     (0, _postgresQuerys.createUser)(req, res).then(function (response) {
       var user = response[0];
-      Object.assign(user, { token: token });
       return res.status(201).send(user);
     });
   });

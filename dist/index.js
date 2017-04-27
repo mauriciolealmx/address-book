@@ -62,6 +62,7 @@ app.set('config', _config2.default);
 // Middleware
 app.disable('x-powered-by');
 app.use((0, _cookieParser2.default)());
+app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: false }));
 app.use(function (req, res, next) {
   // Make sure that the server accepts Cross Origin requests.
