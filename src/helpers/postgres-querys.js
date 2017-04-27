@@ -22,11 +22,9 @@ let getUserByEmail = (email) => {
   });
 };
 
-let createUser = (req, res) => {
+let createUser = (email, encryptedPass) => {
   return new Promise( (resolve, reject) => {
     const results = [];
-    let { email } = req.body;
-    let { encryptedPass } = req;
     const data = { 
       email, 
       password: encryptedPass

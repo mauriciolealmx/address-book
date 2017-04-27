@@ -25,7 +25,6 @@ let isEmailRegistered = (email) => {
 
 let register = (req, res) => {
   let { email, password } = req.body;
-  let encryptedPass;
   if (!password || !email) {
     let missing = !email ? `email ${IS_MISSING}` : `password ${IS_MISSING}`;
     return res.status(400).send(`Bad Request, ${missing}`);
@@ -34,8 +33,7 @@ let register = (req, res) => {
     return res.status(400).send(`Bad Request, ${invalid}`);
   } 
 
-  encryptedPass = cipher(password, KEY);
-  req.encryptedPass = encryptedPass;
+  let encryptedPass = cipher(password, KEY);
 
   isEmailRegistered(email).then( (isRegistered) => {
     if (isRegistered) {
@@ -44,7 +42,7 @@ let register = (req, res) => {
     let token = assignToken({ email, password});
 
     saveUserToFirebase(email);
-    createUser(req, res).then( (response) => {
+    createUser(email, encryptedPass).then( (response) => {
       let user = response[0];
       return res.status(201).send(user);
     });
