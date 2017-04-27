@@ -19,9 +19,9 @@ let saveUserToFirebase = (email) => {
 };
 
 let doesExist = (userId) => {
-  return new Promise(function(resolve) { 
+  return new Promise( (resolve) => { 
     let userRef = REF.child(`users/${userId}`);
-    userRef.once('value', function(snap) {
+    userRef.once('value',  (snap) => {
       return resolve(snap.val());
     });
   });
@@ -29,14 +29,14 @@ let doesExist = (userId) => {
 
 let addContact = (userId, { firstName, lastName, email }) => {
     let contactsRef = REF.child(`users/${userId}/contacts`);
-    return new Promise(function(resolve, reject) {
+    return new Promise( (resolve, reject) => {
       if (!are20CharMax(firstName, lastName, email)) {
         return reject('Fields should not contain more than 20 characters');
       }
       let contactRef = contactsRef.child(`${firstName} ${lastName}`);
       contactRef.set({ firstName, lastName, email });
       // Retrieve added contact.
-      contactRef.on('value', function(snap) {
+      contactRef.on('value',  (snap) => {
         return resolve(snap.val());
       });
     });
