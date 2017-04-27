@@ -11,10 +11,9 @@ let are20CharMax = (...fields) => {
   });
 }
 
-let saveUserToFirebase = (email) => {
+let saveUserToFirebase = (userId) => {
   let usersRef = REF.child('users');
-  let userName = email.split('@')[0];
-  usersRef.child(`${userName}`).set({ 'contacts': ''});
+  usersRef.child(`${userId}`).set({ 'contacts': ''});
   return;
 };
 

@@ -31,10 +31,9 @@ var are20CharMax = function are20CharMax() {
   });
 };
 
-var saveUserToFirebase = function saveUserToFirebase(email) {
+var saveUserToFirebase = function saveUserToFirebase(userId) {
   var usersRef = REF.child('users');
-  var userName = email.split('@')[0];
-  usersRef.child('' + userName).set({ 'contacts': '' });
+  usersRef.child('' + userId).set({ 'contacts': '' });
   return;
 };
 
