@@ -8,7 +8,6 @@ const KEY = process.env.KEY || config.key;
 let login = (req, res) => {
   let { email, password } = req.body;
   let encryptedPass = cipher(password, KEY);
-  let userCredentials = { email, encryptedPass };
   
   // Authenticate function will verify user credentials.
   getUserByEmail(email).then( (result) => {
@@ -16,7 +15,7 @@ let login = (req, res) => {
       let dbPassword = result[0] && result[0].password;
       // If encrypted password is equal to the one in postgreSQL.
       if (encryptedPass === dbPassword) {
-        let token = assignToken(userCredentials);
+        let token = assignToken({ email, password });
         let resJSON = { email, token };
         return res.status(200).send(resJSON);
       } else {
