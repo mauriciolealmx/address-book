@@ -44,7 +44,6 @@ var register = function register(req, res) {
       email = _req$body.email,
       password = _req$body.password;
 
-  var encryptedPass = void 0;
   if (!password || !email) {
     var missing = !email ? 'email ' + IS_MISSING : 'password ' + IS_MISSING;
     return res.status(400).send('Bad Request, ' + missing);
@@ -53,8 +52,7 @@ var register = function register(req, res) {
     return res.status(400).send('Bad Request, ' + invalid);
   }
 
-  encryptedPass = (0, _cryptoUtils.cipher)(password, KEY);
-  req.encryptedPass = encryptedPass;
+  var encryptedPass = (0, _cryptoUtils.cipher)(password, KEY);
 
   isEmailRegistered(email).then(function (isRegistered) {
     if (isRegistered) {
@@ -63,7 +61,7 @@ var register = function register(req, res) {
     var token = (0, _jwtToken.assignToken)({ email: email, password: password });
 
     (0, _firebaseQuerys.saveUserToFirebase)(email);
-    (0, _postgresQuerys.createUser)(req, res).then(function (response) {
+    (0, _postgresQuerys.createUser)(email, encryptedPass).then(function (response) {
       var user = response[0];
       return res.status(201).send(user);
     });

@@ -28,10 +28,6 @@ let doesExist = (userId) => {
 };
 
 let addContact = (userId, { firstName, lastName, email }) => {
-  return doesExist(userId).then( (doesExist) => {
-    if (!doesExist) {
-      return Promise.reject('Not Found');
-    }
     let contactsRef = REF.child(`users/${userId}/contacts`);
     return new Promise(function(resolve, reject) {
       if (!are20CharMax(firstName, lastName, email)) {
@@ -44,7 +40,6 @@ let addContact = (userId, { firstName, lastName, email }) => {
         return resolve(snap.val());
       });
     });
-  });
 };
 
 export { saveUserToFirebase, addContact };

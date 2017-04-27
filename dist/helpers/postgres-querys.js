@@ -41,12 +41,9 @@ var getUserByEmail = function getUserByEmail(email) {
   });
 };
 
-var createUser = function createUser(req, res) {
+var createUser = function createUser(email, encryptedPass) {
   return new _bluebird2.default(function (resolve, reject) {
     var results = [];
-    var email = req.body.email;
-    var encryptedPass = req.encryptedPass;
-
     var data = {
       email: email,
       password: encryptedPass

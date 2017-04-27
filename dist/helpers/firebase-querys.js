@@ -52,21 +52,16 @@ var addContact = function addContact(userId, _ref) {
       lastName = _ref.lastName,
       email = _ref.email;
 
-  return doesExist(userId).then(function (doesExist) {
-    if (!doesExist) {
-      return _bluebird2.default.reject('Not Found');
+  var contactsRef = REF.child('users/' + userId + '/contacts');
+  return new _bluebird2.default(function (resolve, reject) {
+    if (!are20CharMax(firstName, lastName, email)) {
+      return reject('Fields should not contain more than 20 characters');
     }
-    var contactsRef = REF.child('users/' + userId + '/contacts');
-    return new _bluebird2.default(function (resolve, reject) {
-      if (!are20CharMax(firstName, lastName, email)) {
-        return reject('Fields should not contain more than 20 characters');
-      }
-      var contactRef = contactsRef.child(firstName + ' ' + lastName);
-      contactRef.set({ firstName: firstName, lastName: lastName, email: email });
-      // Retrieve added contact.
-      contactRef.on('value', function (snap) {
-        return resolve(snap.val());
-      });
+    var contactRef = contactsRef.child(firstName + ' ' + lastName);
+    contactRef.set({ firstName: firstName, lastName: lastName, email: email });
+    // Retrieve added contact.
+    contactRef.on('value', function (snap) {
+      return resolve(snap.val());
     });
   });
 };
