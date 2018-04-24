@@ -20,8 +20,8 @@ You will need the following things properly installed on your computer.
 * `git clone https://github.com/mauriciolealmx/address-book.git`
 * `cd address-book`
 * `npm install`
-* Change `connectionString` in `config.j` to point to your local postgreSQL.
-* `node dist/models/database.js` This file created a `users` Database in your local instance.
+> Change `connectionString` in `config.js` to point to your local postgreSQL.
+* Run `node dist/models/database.js` to create a `users` Database in your local instance.
 
 ## Running / Development
 
