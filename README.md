@@ -18,7 +18,7 @@ You will need the following things properly installed on your computer.
 
 ## Installation
 
-* `git clone <Repo url>`
+* `git clone https://github.com/mauriciolealmx/address-book.git`
 * cd into address-book
 * `npm install`
 * Change connectionSting in config.js to point to your local postgreSQL.
