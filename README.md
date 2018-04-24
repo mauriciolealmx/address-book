@@ -4,8 +4,7 @@ Simple address-book API.
 
 ## Documentation
 
-* For proper documentation please visit:
-* [http://mleal-address-book.herokuapp.com/api](http://mleal-address-book.herokuapp.com/api).
+* For proper documentation please visit: [http://mleal-address-book.herokuapp.com/api](http://mleal-address-book.herokuapp.com/api).
 
 ## Prerequisites
 
@@ -19,9 +18,9 @@ You will need the following things properly installed on your computer.
 ## Installation
 
 * `git clone https://github.com/mauriciolealmx/address-book.git`
-* cd into address-book
+* `cd address-book`
 * `npm install`
-* Change connectionSting in config.js to point to your local postgreSQL.
+* Change `connectionString` in `config.j` to point to your local postgreSQL.
 * `node dist/models/database.js` This file created a `users` Database in your local instance.
 
 ## Running / Development
