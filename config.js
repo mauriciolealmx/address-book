@@ -1,5 +1,5 @@
 module.exports={
-  "connectionString" : 'postgres://localhost:5432/mleal',
+  "connectionString" : 'postgresql://myapp:dbpass@localhost:15432/myapp',
   "jwt_secret": "-secret-",
   "key": '-secret-',
   "EXPIRES_IN": '24h',
