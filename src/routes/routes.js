@@ -1,4 +1,4 @@
-import { isValidToken } from '../middlewares/jwt-token'; 
+import { isValidToken } from '../middlewares/jwt-token';
 import { create } from './create';
 import { login } from './login';
 import { register } from './register';

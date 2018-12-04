@@ -18,13 +18,12 @@ const isValidEmail = email => {
 };
 
 const isEmailRegistered = email => {
-  return getUserByEmail(email).then(result => {
-    return result.length > 0;
-  });
+  return getUserByEmail(email).then(result => result.length > 0);
 };
 
 const register = (req, res) => {
   const { email, password } = req.body;
+
   if (!password || !email) {
     const missing = !email ? `email ${IS_MISSING}` : `password ${IS_MISSING}`;
     return res.status(400).send(`Bad Request, ${missing}`);
@@ -34,7 +33,6 @@ const register = (req, res) => {
   }
 
   const encryptedPass = cipher(password, KEY);
-
   isEmailRegistered(email).then(isRegistered => {
     if (isRegistered) {
       return res.status(400).send({ error: 'Email is already registered' });
