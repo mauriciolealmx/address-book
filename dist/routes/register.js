@@ -9,13 +9,13 @@ var _config = require('../../config');
 
 var _config2 = _interopRequireDefault(_config);
 
+var _jwtToken = require('../middlewares/jwt-token');
+
 var _cryptoUtils = require('../helpers/crypto-utils');
 
 var _postgresQuerys = require('../helpers/postgres-querys');
 
 var _firebaseQuerys = require('../helpers/firebase-querys');
-
-var _jwtToken = require('../middlewares/jwt-token');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

@@ -5,10 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.createUser = exports.getUserByEmail = undefined;
 
-var _config = require('../../config');
-
-var _config2 = _interopRequireDefault(_config);
-
 var _bluebird = require('bluebird');
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
@@ -17,11 +13,15 @@ var _pg = require('pg');
 
 var _pg2 = _interopRequireDefault(_pg);
 
+var _config = require('../../config');
+
+var _config2 = _interopRequireDefault(_config);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var connectionString = process.env.DATABASE_URL || _config2.default.connectionString;
 
-var getUserByEmail = function getUserByEmail(email) {
+var getUserByEmail = exports.getUserByEmail = function getUserByEmail(email) {
   return new _bluebird2.default(function (resolve) {
     _pg2.default.connect(connectionString, function (err, client, done) {
       // Handle connection errors
@@ -41,7 +41,7 @@ var getUserByEmail = function getUserByEmail(email) {
   });
 };
 
-var createUser = function createUser(email, encryptedPass) {
+var createUser = exports.createUser = function createUser(email, encryptedPass) {
   return new _bluebird2.default(function (resolve, reject) {
     var results = [];
     var data = {
@@ -69,6 +69,3 @@ var createUser = function createUser(email, encryptedPass) {
     });
   });
 };
-
-exports.getUserByEmail = getUserByEmail;
-exports.createUser = createUser;

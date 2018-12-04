@@ -1,44 +1,36 @@
 'use strict';
 
-var _passport = require('passport');
+var _firebaseAdmin = require('firebase-admin');
 
-var _passport2 = _interopRequireDefault(_passport);
-
-var _expressSession = require('express-session');
-
-var _expressSession2 = _interopRequireDefault(_expressSession);
-
-var _cookieParser = require('cookie-parser');
-
-var _cookieParser2 = _interopRequireDefault(_cookieParser);
+var admin = _interopRequireWildcard(_firebaseAdmin);
 
 var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
-var _express = require('express');
-
-var _express2 = _interopRequireDefault(_express);
-
 var _config = require('../config');
 
 var _config2 = _interopRequireDefault(_config);
+
+var _cookieParser = require('cookie-parser');
+
+var _cookieParser2 = _interopRequireDefault(_cookieParser);
+
+var _express = require('express');
+
+var _express2 = _interopRequireDefault(_express);
 
 var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
-var _firebaseAdmin = require('firebase-admin');
-
-var admin = _interopRequireWildcard(_firebaseAdmin);
-
 var _addressBookB4923FirebaseAdminsdk70gx68382c02c = require('../address-book-b4923-firebase-adminsdk-70gx6-8382c02c12.json');
 
 var _addressBookB4923FirebaseAdminsdk70gx68382c02c2 = _interopRequireDefault(_addressBookB4923FirebaseAdminsdk70gx68382c02c);
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 admin.initializeApp({
   credential: admin.credential.cert(_addressBookB4923FirebaseAdminsdk70gx68382c02c2.default),

@@ -8,7 +8,7 @@ client.connect();
 const query = client.query(
   'CREATE TABLE users(id SERIAL PRIMARY KEY, email VARCHAR(50) not null, password CHARACTER(32) not null)'
 );
-query.on('end', () => { 
-	console.log('Table created');
-	client.end(); 
+query.on('end', () => {
+  console.log('Table created');
+  client.end();
 });

@@ -16,6 +16,6 @@ var client = new _pg2.default.Client(connectionString);
 client.connect();
 var query = client.query('CREATE TABLE users(id SERIAL PRIMARY KEY, email VARCHAR(50) not null, password CHARACTER(32) not null)');
 query.on('end', function () {
-	console.log('Table created');
-	client.end();
+  console.log('Table created');
+  client.end();
 });

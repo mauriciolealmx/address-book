@@ -1,12 +1,13 @@
-import config from '../../config';
 import jwt from 'jsonwebtoken';
+
+import config from '../../config';
 
 const SECRET = process.env.JWT_SECRET || config.jwt_secret;
 
-let isValidToken = (req, res, next) => {
+const isValidToken = (req, res, next) => {
   return (req, res, next) => {
-    let { body, query, headers } = req;
-    let token = body.token || query.token || headers['x-access-token'];
+    const { body, query, headers } = req;
+    const token = body.token || query.token || headers['x-access-token'];
 
     if (token) {
       jwt.verify(token, SECRET, (err, decoded) => {
@@ -14,7 +15,7 @@ let isValidToken = (req, res, next) => {
           console.log(err);
           return res.redirect('/login');
         } else {
-          // If token is valid attach decoded to req for possible use in routes. 
+          // If token is valid attach decoded to req for possible use in routes.
           req.decoded = decoded;
           return next();
         }
@@ -22,12 +23,12 @@ let isValidToken = (req, res, next) => {
     } else {
       return res.redirect('/login');
     }
-  }
-}
+  };
+};
 
-let assignToken = (userCredentials) => {
+const assignToken = userCredentials => {
   return jwt.sign(userCredentials, SECRET, {
-    expiresIn: config.EXPIRES_IN
+    expiresIn: config.EXPIRES_IN,
   });
 };
 

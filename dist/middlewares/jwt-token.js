@@ -5,13 +5,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.assignToken = exports.isValidToken = undefined;
 
-var _config = require('../../config');
-
-var _config2 = _interopRequireDefault(_config);
-
 var _jsonwebtoken = require('jsonwebtoken');
 
 var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
+
+var _config = require('../../config');
+
+var _config2 = _interopRequireDefault(_config);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31,7 +31,7 @@ var isValidToken = function isValidToken(req, res, next) {
           console.log(err);
           return res.redirect('/login');
         } else {
-          // If token is valid attach decoded to req for possible use in routes. 
+          // If token is valid attach decoded to req for possible use in routes.
           req.decoded = decoded;
           return next();
         }

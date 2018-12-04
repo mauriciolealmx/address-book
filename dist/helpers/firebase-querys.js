@@ -33,7 +33,7 @@ var are20CharMax = function are20CharMax() {
 
 var saveUserToFirebase = function saveUserToFirebase(userId) {
   var usersRef = REF.child('users');
-  usersRef.child('' + userId).set({ 'contacts': '' });
+  usersRef.child('' + userId).set({ contacts: '' });
   return;
 };
 
