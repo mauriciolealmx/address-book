@@ -7,6 +7,7 @@ npm-debug.log
 *.dev
 .DS_Store
 
-# Docker
-Dockerfile
-docker-compose.yml
+# dist is on GIT's index.
+# If it needs to be ignored, then it has to
+# be removed from the index.
+dist/*
