@@ -1,10 +1,8 @@
 import { addContact } from '../helpers/firebase-querys';
 
 // TODO: User B should not be able to create contacts with user's A jwt Token.
-const create = (req, res) => {
-  const { userId } = req.params;
-  const { firstName, lastName, email } = req.body;
-  addContact(userId, { firstName, lastName, email })
+export const create = (req, res) =>
+  addContact(req.params.userId, req.body)
     .then(response => {
       if (response) {
         return res.status(201).send(response);
@@ -17,6 +15,3 @@ const create = (req, res) => {
         return res.status(404).send(err);
       }
     });
-};
-
-export { create };
