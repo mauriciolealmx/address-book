@@ -5,7 +5,7 @@ import { getUserByEmail } from '../helpers/postgres-querys';
 
 const KEY = process.env.KEY || config.key;
 
-const login = (req, res) => {
+export const login = (req, res) => {
   const { email, password } = req.body;
   const encryptedPass = cipher(password, KEY);
 
@@ -30,5 +30,3 @@ const login = (req, res) => {
       return res.status(500).json({ success: false, data: err });
     });
 };
-
-export { login };

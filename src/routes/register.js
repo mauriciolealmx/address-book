@@ -21,7 +21,7 @@ const isEmailRegistered = email => {
   return getUserByEmail(email).then(result => result.length > 0);
 };
 
-const register = (req, res) => {
+export const register = (req, res) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -45,5 +45,3 @@ const register = (req, res) => {
     });
   });
 };
-
-export { register };

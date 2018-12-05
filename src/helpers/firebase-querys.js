@@ -27,11 +27,12 @@ const doesExist = userId => {
 };
 
 const addContact = (userId, { firstName, lastName, email }) => {
-  const contactsRef = REF.child(`users/${userId}/contacts`);
   return new Promise((resolve, reject) => {
     if (!are20CharMax(firstName, lastName, email)) {
       return reject('Fields should not contain more than 20 characters');
     }
+    // At the moment userId is the ID created by postgreSQL.
+    const contactsRef = REF.child(`users/${userId}/contacts`);
     const contactRef = contactsRef.child(`${firstName} ${lastName}`);
     contactRef.set({ firstName, lastName, email });
     // Retrieve added contact.
