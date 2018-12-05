@@ -12,14 +12,17 @@ const login = (req, res) => {
   // Authenticate function will verify user credentials.
   getUserByEmail(email)
     .then(result => {
-      const dbPassword = result[0] && result[0].password;
-      const id = result[0].id;
+      // TODO: Need to add logic for non existent emails.
+      const [user] = result;
+      const dbPassword = user && user.password;
+      const id = user.id;
       // If encrypted password is equal to the one in postgreSQL.
       if (encryptedPass === dbPassword) {
         const token = assignToken({ email, password });
         const resJSON = { id, email, token };
         return res.status(200).send(resJSON);
       } else {
+        // TODO: Error message should be more precise.
         return res.status(404).send('Not Found');
       }
     })

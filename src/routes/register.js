@@ -24,7 +24,7 @@ const isEmailRegistered = email => {
 const register = (req, res) => {
   const { email, password } = req.body;
 
-  if (!password || !email) {
+  if (!email || !password) {
     const missing = !email ? `email ${IS_MISSING}` : `password ${IS_MISSING}`;
     return res.status(400).send(`Bad Request, ${missing}`);
   } else if (!isValidEmail(email) || !isValidPassword(password)) {
@@ -37,11 +37,10 @@ const register = (req, res) => {
     if (isRegistered) {
       return res.status(400).send({ error: 'Email is already registered' });
     }
-    const token = assignToken({ email, password });
 
-    createUser(email, encryptedPass).then(response => {
-      saveUserToFirebase(response[0].id);
-      const user = response[0];
+    const token = assignToken({ email, password });
+    createUser(email, encryptedPass).then(([user]) => {
+      saveUserToFirebase(user.id);
       return res.status(201).send(user);
     });
   });

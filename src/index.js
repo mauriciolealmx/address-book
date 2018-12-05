@@ -8,7 +8,7 @@ import serviceAccount from '../address-book-b4923-firebase-adminsdk-70gx6-8382c0
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: config.databaseURL
+  databaseURL: config.databaseURL,
 });
 
 // Firebase.
@@ -17,7 +17,7 @@ const ref = db.ref('address-book/data');
 const usersRef = ref.child('users');
 
 const app = express();
-app.set('port', (process.env.PORT || 5000));
+app.set('port', process.env.PORT || 5000);
 app.use(express.static(path.join(__dirname, '../public')));
 
 // view engine setup
@@ -31,10 +31,10 @@ app.disable('x-powered-by');
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use( (req, res, next) => {
+app.use((req, res, next) => {
   // Make sure that the server accepts Cross Origin requests.
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
 
@@ -42,7 +42,7 @@ app.use( (req, res, next) => {
 require('./routes/routes')(app, express);
 
 const server = app.listen(app.get('port'), () => {
-  if( !process.env.TESTING ) {
+  if (!process.env.TESTING) {
     console.log('Node app is running on port', app.get('port'));
   }
 });

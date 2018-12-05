@@ -4,7 +4,7 @@ import { login } from './login';
 import { register } from './register';
 
 module.exports = (app, express) => {
-  let router = express.Router();
+  const router = express.Router();
 
   /**
    *  Handling: Unauthorized users (Not logged in user or not registered user).
