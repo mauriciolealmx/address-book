@@ -11,6 +11,7 @@ admin.initializeApp({
   databaseURL: config.databaseURL
 });
 
+// Firebase.
 const db = admin.database();
 const ref = db.ref('address-book/data');
 const usersRef = ref.child('users');

@@ -14,7 +14,5 @@ export const getUserByEmail = email => {
 
 export const createUser = (email, encryptedPass) => {
   const queryString = 'INSERT INTO users(email, password) values($1, $2)';
-  return client.query(queryString, [email, encryptedPass]).then(() => {
-    return getUserByEmail(email);
-  });
+  return client.query(queryString, [email, encryptedPass]).then(() => getUserByEmail(email));
 };
