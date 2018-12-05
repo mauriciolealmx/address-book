@@ -7,6 +7,13 @@ module.exports = (app, express) => {
   const router = express.Router();
 
   /**
+   *  Handling: Landing page.
+   *  method: GET
+   *  uri: '/'
+   */
+  app.get('/', (req, res) => res.render('pages/index'));
+
+  /**
    *  Handling: Unauthorized users (Not logged in user or not registered user).
    *  method: GET
    *  uri: '/login'
