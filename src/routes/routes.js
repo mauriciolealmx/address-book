@@ -44,7 +44,7 @@ module.exports = (app, express) => {
   /**
    *  Middleware: Check for valid jwt Token.
    */
-  // app.use(isValidToken());
+  app.use(isValidToken);
 
   /**
    *  Handling: Create new contact

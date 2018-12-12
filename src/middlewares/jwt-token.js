@@ -5,25 +5,23 @@ import config from '../../config';
 const SECRET = process.env.JWT_SECRET || config.jwt_secret;
 
 const isValidToken = (req, res, next) => {
-  return (req, res, next) => {
-    const { body, query, headers } = req;
-    const token = body.token || query.token || headers['x-access-token'];
+  const { body, query, headers } = req;
+  const token = body.token || query.token || headers['x-access-token'];
 
-    if (token) {
-      jwt.verify(token, SECRET, (err, decoded) => {
-        if (err) {
-          console.log(err);
-          return res.redirect('/login');
-        } else {
-          // If token is valid attach decoded to req for possible use in routes.
-          req.decoded = decoded;
-          return next();
-        }
-      });
-    } else {
-      return res.redirect('/login');
-    }
-  };
+  if (token) {
+    jwt.verify(token, SECRET, (err, decoded) => {
+      if (err) {
+        console.log(err);
+        return res.redirect('/login');
+      } else {
+        // If token is valid attach decoded to req for possible use in routes.
+        req.decoded = decoded;
+        return next();
+      }
+    });
+  } else {
+    return res.redirect('/login');
+  }
 };
 
 const assignToken = userCredentials => {
