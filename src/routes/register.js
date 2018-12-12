@@ -8,6 +8,8 @@ const IS_MISSING = 'is missing';
 const NOT_VALID = 'is not valid';
 const KEY = process.env.KEY || config.key;
 
+const getEmailId = email => email.split('@')[0];
+
 const isValidPassword = password => {
   return /^[A-Za-z\\d!@#$%^&*]{6,20}$/.test(password);
 };
@@ -40,7 +42,7 @@ export const register = (req, res) => {
 
     const token = assignToken({ email, password });
     createUser(email, encryptedPass).then(([user]) => {
-      const [emailId] = user.email.split('@');
+      const emailId = getEmailId(user.email);
       saveUserToFirebase(emailId);
       return res.status(201).send(user);
     });
