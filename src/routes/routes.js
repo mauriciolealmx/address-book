@@ -32,14 +32,14 @@ module.exports = (app, express) => {
    *  method: POST
    *  uri: '/login'
    */
-  app.post('/login', (req, res) => login(req, res));
+  app.post('/login', login);
 
   /**
    *  Handling: Registration
    *  method: POST
    *  uri: '/register'
    */
-  app.post('/register', (req, res) => register(req, res));
+  app.post('/register', register);
 
   /**
    *  Middleware: Check for valid jwt Token.
