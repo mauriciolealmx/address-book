@@ -2,6 +2,7 @@ import { isValidToken } from '../middlewares/jwt-token';
 import { create } from './create';
 import { login } from './login';
 import { register } from './register';
+import { retreive } from './retreive';
 
 module.exports = (app, express) => {
   const router = express.Router();
@@ -49,7 +50,14 @@ module.exports = (app, express) => {
   /**
    *  Handling: Create new contact
    *  method: POST
-   *  uri: '/create/##/contacts'
+   *  uri: '/users/:userId/contacts'
    */
-  app.post('/users/:userId/contacts', (req, res) => create(req, res));
+  app.post('/users/:userId/contacts', create);
+
+  /**
+   *  Handling: Get all user contacts
+   *  method: GET
+   *  uri: '/users/:userId/contacts'
+   */
+  app.get('/users/:userId/contacts', retreive);
 };

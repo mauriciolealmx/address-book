@@ -11,22 +11,20 @@ const are20CharMax = (...fields) => {
   });
 };
 
-const saveUserToFirebase = userId => {
+export const getContacts = userId => {
+  return new Promise(resolve => {
+    const userRef = REF.child(`users/${userId}`);
+    userRef.once('value', snap => resolve(snap.val()));
+  });
+};
+
+export const saveUserToFirebase = userId => {
   const usersRef = REF.child('users');
   usersRef.child(`${userId}`).set({ contacts: '' });
   return;
 };
 
-const doesExist = userId => {
-  return new Promise(resolve => {
-    const userRef = REF.child(`users/${userId}`);
-    userRef.once('value', snap => {
-      return resolve(snap.val());
-    });
-  });
-};
-
-const addContact = (userId, { firstName, lastName, email }) => {
+export const addContact = (userId, { firstName, lastName, email }) => {
   return new Promise((resolve, reject) => {
     if (!are20CharMax(firstName, lastName, email)) {
       return reject('Fields should not contain more than 20 characters');
@@ -41,5 +39,3 @@ const addContact = (userId, { firstName, lastName, email }) => {
     });
   });
 };
-
-export { saveUserToFirebase, addContact };
