@@ -29,11 +29,26 @@ export const addContact = (userId, { firstName, lastName, email }) => {
     if (!are20CharMax(firstName, lastName, email)) {
       return reject('Fields should not contain more than 20 characters');
     }
-    // At the moment userId is the ID created by postgreSQL.
     const contactsRef = REF.child(`users/${userId}/contacts`);
     const contactRef = contactsRef.child(`${firstName} ${lastName}`);
     contactRef.set({ firstName, lastName, email });
     // Retrieve added contact.
+    contactRef.on('value', snap => {
+      return resolve(snap.val());
+    });
+  });
+};
+
+export const deleteContact = (userId, { firstName, lastName }) => {
+  return new Promise((resolve, reject) => {
+    const contactsRef = REF.child(`users/${userId}/contacts`);
+    const contactRef = contactsRef.child(`${firstName} ${lastName}`);
+    contactRef.set(null);
+    // Check if contact exists.
+    /**
+     * TODO: It should check if the user exists first.
+     * Then it should delete the contact.
+     */
     contactRef.on('value', snap => {
       return resolve(snap.val());
     });

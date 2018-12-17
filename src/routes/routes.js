@@ -3,6 +3,7 @@ import { create } from './create';
 import { login } from './login';
 import { register } from './register';
 import { retreive } from './retreive';
+import { remove } from './remove';
 
 module.exports = (app, express) => {
   const router = express.Router();
@@ -60,4 +61,11 @@ module.exports = (app, express) => {
    *  uri: '/users/:userId/contacts'
    */
   app.get('/users/:userId/contacts', retreive);
+
+  /**
+   *  Handling: Delete single user's contact
+   *  method: Delete
+   *  uri: '/users/:userId/contacts/:userContact'
+   */
+  app.delete('/users/:userId/contacts', remove);
 };
