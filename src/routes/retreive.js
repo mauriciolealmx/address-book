@@ -6,8 +6,8 @@ export function retreive(req, res) {
     if (resp) {
       const { contacts } = resp;
       const contactInfo = Object.values(contacts);
-      res.status(200).send(contactInfo);
+      return res.status(200).send(contactInfo);
     }
-    res.status(200).send([]);
+    return res.status(200).send([]);
   });
 }
