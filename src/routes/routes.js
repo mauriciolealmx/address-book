@@ -64,8 +64,8 @@ module.exports = (app, express) => {
 
   /**
    *  Handling: Delete single user's contact
-   *  method: Delete
+   *  method: PUT
    *  uri: '/users/:userId/contacts/:userContact'
    */
-  app.delete('/users/:userId/contacts', remove);
+  app.put('/users/:userId/contacts', remove);
 };

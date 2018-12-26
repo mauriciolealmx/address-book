@@ -41,7 +41,7 @@ export const register = (req, res) => {
     }
 
     const token = assignToken({ email, password });
-    createUser(email, encryptedPass).then(([user]) => {
+    createUser(email, encryptedPass).then(user => {
       const emailId = getEmailId(user.email);
       saveUserToFirebase(emailId);
       return res.status(201).send(user);
