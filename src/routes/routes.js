@@ -1,9 +1,11 @@
-import { isValidToken } from '../middlewares/jwt-token';
+import path from 'path';
+
 import { create } from './create';
+import { isValidToken } from '../middlewares/jwt-token';
 import { login } from './login';
 import { register } from './register';
-import { retreive } from './retreive';
 import { remove } from './remove';
+import { retreive } from './retreive';
 
 module.exports = (app, express) => {
   const router = express.Router();
@@ -13,7 +15,11 @@ module.exports = (app, express) => {
    *  method: GET
    *  uri: '/'
    */
-  app.get('/', (req, res) => res.render('pages/index'));
+  // app.get('/', (req, res) => res.render('pages/index'));
+
+  app.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  });
 
   /**
    *  Handling: Unauthorized users (Not logged in user or not registered user).
