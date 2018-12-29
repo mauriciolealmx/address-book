@@ -18,28 +18,26 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var SECRET = process.env.JWT_SECRET || _config2.default.jwt_secret;
 
 var isValidToken = function isValidToken(req, res, next) {
-  return function (req, res, next) {
-    var body = req.body,
-        query = req.query,
-        headers = req.headers;
+  var body = req.body,
+      query = req.query,
+      headers = req.headers;
 
-    var token = body.token || query.token || headers['x-access-token'];
+  var token = body.token || query.token || headers['x-access-token'];
 
-    if (token) {
-      _jsonwebtoken2.default.verify(token, SECRET, function (err, decoded) {
-        if (err) {
-          console.log(err);
-          return res.redirect('/login');
-        } else {
-          // If token is valid attach decoded to req for possible use in routes.
-          req.decoded = decoded;
-          return next();
-        }
-      });
-    } else {
-      return res.redirect('/login');
-    }
-  };
+  if (token) {
+    _jsonwebtoken2.default.verify(token, SECRET, function (err, decoded) {
+      if (err) {
+        console.log(err);
+        return res.redirect('/login');
+      } else {
+        // If token is valid attach decoded to req for possible use in routes.
+        req.decoded = decoded;
+        return next();
+      }
+    });
+  } else {
+    return res.redirect('/login');
+  }
 };
 
 var assignToken = function assignToken(userCredentials) {

@@ -37,6 +37,7 @@ admin.initializeApp({
   databaseURL: _config2.default.databaseURL
 });
 
+// Firebase.
 var db = admin.database();
 var ref = db.ref('address-book/data');
 var usersRef = ref.child('users');
@@ -58,8 +59,8 @@ app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: false }));
 app.use(function (req, res, next) {
   // Make sure that the server accepts Cross Origin requests.
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
 

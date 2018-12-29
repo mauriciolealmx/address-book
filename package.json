@@ -9,6 +9,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "babel src -d dist ",
+    "prestart": "npm run build",
     "start:live": "nodemon ./src/index.js --exec babel-node -- --presets=es2015",
     "start": "node ./dist/index",
     "test": "TESTING=true mocha ./test/top.js --compilers js:babel-register --timeout 15000",

@@ -23,6 +23,10 @@ var IS_MISSING = 'is missing';
 var NOT_VALID = 'is not valid';
 var KEY = process.env.KEY || _config2.default.key;
 
+var getEmailId = function getEmailId(email) {
+  return email.split('@')[0];
+};
+
 var isValidPassword = function isValidPassword(password) {
   return (/^[A-Za-z\\d!@#$%^&*]{6,20}$/.test(password)
   );
@@ -39,12 +43,13 @@ var isEmailRegistered = function isEmailRegistered(email) {
   });
 };
 
-var register = function register(req, res) {
+var register = exports.register = function register(req, res) {
   var _req$body = req.body,
       email = _req$body.email,
       password = _req$body.password;
 
-  if (!password || !email) {
+
+  if (!email || !password) {
     var missing = !email ? 'email ' + IS_MISSING : 'password ' + IS_MISSING;
     return res.status(400).send('Bad Request, ' + missing);
   } else if (!isValidEmail(email) || !isValidPassword(password)) {
@@ -53,19 +58,16 @@ var register = function register(req, res) {
   }
 
   var encryptedPass = (0, _cryptoUtils.cipher)(password, KEY);
-
   isEmailRegistered(email).then(function (isRegistered) {
     if (isRegistered) {
       return res.status(400).send({ error: 'Email is already registered' });
     }
-    var token = (0, _jwtToken.assignToken)({ email: email, password: password });
 
-    (0, _postgresQuerys.createUser)(email, encryptedPass).then(function (response) {
-      (0, _firebaseQuerys.saveUserToFirebase)(response[0].id);
-      var user = response[0];
+    var token = (0, _jwtToken.assignToken)({ email: email, password: password });
+    (0, _postgresQuerys.createUser)(email, encryptedPass).then(function (user) {
+      var emailId = getEmailId(user.email);
+      (0, _firebaseQuerys.saveUserToFirebase)(emailId);
       return res.status(201).send(user);
     });
   });
 };
-
-exports.register = register;

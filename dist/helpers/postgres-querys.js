@@ -3,15 +3,9 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.createUser = exports.getUserByEmail = undefined;
-
-var _bluebird = require('bluebird');
-
-var _bluebird2 = _interopRequireDefault(_bluebird);
+exports.deleteUser = exports.createUser = exports.getUserByEmail = undefined;
 
 var _pg = require('pg');
-
-var _pg2 = _interopRequireDefault(_pg);
 
 var _config = require('../../config');
 
@@ -20,52 +14,35 @@ var _config2 = _interopRequireDefault(_config);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var connectionString = process.env.DATABASE_URL || _config2.default.connectionString;
+var client = new _pg.Client(connectionString);
+client.connect();
 
+// TODO: Need to end() the connection after querys.
 var getUserByEmail = exports.getUserByEmail = function getUserByEmail(email) {
-  return new _bluebird2.default(function (resolve) {
-    _pg2.default.connect(connectionString, function (err, client, done) {
-      // Handle connection errors
-      if (err) {
-        done();
-        return reject(err);
-      }
-      // SQL Query > Find user by email
-      var query = client.query('SELECT * FROM users WHERE email=\'' + email + '\'').then(function (_ref) {
-        var rows = _ref.rows;
-
-        return resolve(rows);
-      }).catch(function (err) {
-        return resolve([]);
-      });
-    });
+  var queryString = 'SELECT * FROM users WHERE email=\'' + email + '\'';
+  return client.query(queryString).then(function (_ref) {
+    var rows = _ref.rows;
+    return rows;
   });
 };
 
 var createUser = exports.createUser = function createUser(email, encryptedPass) {
-  return new _bluebird2.default(function (resolve, reject) {
-    var results = [];
-    var data = {
-      email: email,
-      password: encryptedPass
-    };
+  var queryString = 'INSERT INTO users(email, password) values($1, $2)';
+  return client.query(queryString, [email, encryptedPass]).then(function () {
+    return getUserByEmail(email);
+  }).then(function (res) {
+    return res[0];
+  }).catch(function (err) {
+    return console.error(err.stack);
+  });
+};
 
-    _pg2.default.connect(connectionString, function (err, client, done) {
-      // Handle connection errors
-      if (err) {
-        done();
-        return res.status(500).json({ success: false, data: err });
-      }
-      // SQL Query > Insert Data
-      client.query('INSERT INTO users(email, password) values($1, $2)', [data.email, data.password]);
-      // SQL Query > Find user by email
-      var query = client.query('SELECT * FROM users WHERE email=\'' + email + '\'');
-      query.on('row', function (row) {
-        results.push(row);
-      });
-      query.on('end', function () {
-        done();
-        return resolve(results);
-      });
-    });
+// TODO: Not tested
+var deleteUser = exports.deleteUser = function deleteUser(email) {
+  var queryString = 'DELETE FROM users WHERE email=\'' + email + '\'';
+  return client.query(queryString).then(function (res) {
+    return res.rows[0];
+  }).catch(function (err) {
+    return console.error(err.stack);
   });
 };
