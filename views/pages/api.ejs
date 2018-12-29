@@ -12,6 +12,7 @@
           <a href="#register"><li>Register new user</li></a>
           <a href="#login"><li>Login user</li></a>
           <a href="#create"><li>Create new contact for user</li></a>
+          <a href="#get-all"><li>Get all user contacts</li></a>
         </ol>
       </div>
       <section class="register">
@@ -60,10 +61,10 @@
           <h5>Sample request body:</h5>
           <code style="background-color: white;">
           <pre>
-      {
-        "email": "mauriciolealmx@mauriciolealmx.com",
-        "password": "P@ssword"
-      }
+    {
+      "email": "mauriciolealmx@mauriciolealmx.com",
+      "password": "P@ssword"
+    }
           </pre>
           </code>
         </div>
@@ -71,13 +72,10 @@
           <h4>Sample Response:</h4>
           <code style="background-color: white;">
           <pre>
-      {
-        "id": 1,
-        "email": "mauriciolealmx@mauriciolealmx.com",
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hdXJpY2lvbGVhbG14M0BnbWFpbC5jb20iLCJlbmNyeXB0ZWRQYXNzIjo
-        iMWM1OGMxMmZjOWY3YmI0YWZlYWRlNTAwNTUwOTljMTgiLCJpYXQiOjE0OTI4ODk0OTksImV4cCI6MTQ5Mjk3NTg5OX0.cRGEwLIL17zzwXn0tWP2J3J5c
-        KYZYOQnhkQ62b-kOY8"
-      }
+    {
+      "id": 1,
+      "email": "mauriciolealmx@mauriciolealmx.com"
+    }
           </pre>
           </code>
         </div>
@@ -127,10 +125,10 @@
           <h5>Sample request body:</h5>
           <code style="background-color: white;">
           <pre>
-      {
-        "email": "mauriciolealmx@mauriciolealmx.com",
-        "password": "P@ssword"
-      }
+    {
+      "email": "mauriciolealmx@mauriciolealmx.com",
+      "password": "P@ssword"
+    }
           </pre>
           </code>
         </div>
@@ -138,12 +136,12 @@
           <h4>Sample Response:</h4>
           <code style="background-color: white;">
           <pre>
-      {
-        "email": "mauriciolealmx@mauriciolealmx.com",
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hdXJpY2lvbGVhbG14M0BnbWFpbC5jb20iLCJlbmNyeXB0ZWRQYXNzIjo
-        iMWM1OGMxMmZjOWY3YmI0YWZlYWRlNTAwNTUwOTljMTgiLCJpYXQiOjE0OTI4ODk0OTksImV4cCI6MTQ5Mjk3NTg5OX0.cRGEwLIL17zzwXn0tWP2J3J5c
-        KYZYOQnhkQ62b-kOY8"
-      }
+    {
+      "email": "mauriciolealmx@mauriciolealmx.com",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hdXJpY2lvbGVhbG14M0BnbWFpbC5jb20iLCJlbmNyeXB0ZWRQYXNzIjo
+      iMWM1OGMxMmZjOWY3YmI0YWZlYWRlNTAwNTUwOTljMTgiLCJpYXQiOjE0OTI4ODk0OTksImV4cCI6MTQ5Mjk3NTg5OX0.cRGEwLIL17zzwXn0tWP2J3J5c
+      KYZYOQnhkQ62b-kOY8"
+    }
           </pre>
           </code>
         </div>      
@@ -211,12 +209,20 @@
                 <td>User's first name</td>
               </tr>
               <tr>
-                <th scope="row">2</th>
+                <th scope="row">3</th>
                 <td>lastName</td>
                 <td>true</td>
                 <td>string</td>
                 <td>none</td>
                 <td>User's surname</td>
+              </tr>
+              <tr>
+                <th scope="row">4</th>
+                <td>token</td>
+                <td>true</td>
+                <td>string</td>
+                <td>none</td>
+                <td>Token is required and it is provided in Login response.</td>
               </tr>
             </tbody>
           </table>
@@ -226,11 +232,14 @@
           <h5>Sample request body:</h5>
           <code style="background-color: white;">
           <pre>
-      {
-        "email": "marcela.garza@mauriciolealmx.com",
-        "firstName": "Marcela"
-        "lastName": "Garza"
-      }
+    {
+      "email": "marcela.garza@mauriciolealmx.com",
+      "firstName": "Marcela",
+      "lastName": "Garza",
+      "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1hdXJpY2lvbGVhbG14M0BnbWFpbC5jb20iLCJlbmNyeXB0ZWRQYXNzIjo
+      iMWM1OGMxMmZjOWY3YmI0YWZlYWRlNTAwNTUwOTljMTgiLCJpYXQiOjE0OTI4ODk0OTksImV4cCI6MTQ5Mjk3NTg5OX0.cRGEwLIL17zzwXn0tWP2J3J5c
+      KYZYOQnhkQ62b-kOY8"
+    }
           </pre>
           </code>
         </div>
@@ -238,14 +247,77 @@
           <h4>Sample Response:</h4>
           <code style="background-color: white;">
           <pre>
-      {
-        "email": "marcela.garza@mauriciolealmx.com",
-        "firstName": "Marcela",
-        "lastName": "Garza"
-      }
+    {
+      "email": "marcela.garza@mauriciolealmx.com",
+      "firstName": "Marcela",
+      "lastName": "Garza"
+    }
           </pre>
           </code>
         </div>      
+      </section>
+      <section class="get-all">
+        <div>
+          <h3 id="get-all">Get all user contacts</h3>
+          <hr>
+          <h4>Resource URL</h4>
+          <code>GET <a style="color: #c7254e;" href="#">https://mleal-address-book.herokuapp.com/users/:userId/contacts?token=:token</a></code>
+        </div>
+        <div>
+          <h4>URI Tokens:</h4>
+          <table class="table" style="background-color: #f5f5f5; border: 1px solid #ccc;">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Field</th>
+                <th>Required</th>
+                <th>Format</th>
+                <th>Default</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>userId</td>
+                <td>true</td>
+                <td>string</td>
+                <td>none</td>
+                <td>userId extracted from the email with which the user registered his account. TODO: userId needs to be updated.</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>token</td>
+                <td>true</td>
+                <td>string</td>
+                <td>none</td>
+                <td>Token is required and it is provided in Login response.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h4>Request header:</h4>
+          <h5>Sample request header</h5>
+          <code style="background-color: white;">
+            <!-- TODO: Token should be sent in header not as URL param -->
+            <pre>
+    Pending...
+            </pre>
+          </code>
+        </div>
+        <div>
+          <h4>Sample Response:</h4>
+          <code style="background-color: white;">
+          <pre>
+    {
+      "email": "marcela.garza@mauriciolealmx.com",
+      "firstName": "Marcela",
+      "lastName": "Garza"
+    }
+          </pre>
+          </code>
+        </div>
       </section>
     <% include ../partials/scripts.ejs %>
   </body>
