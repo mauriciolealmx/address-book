@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "An address book using Node and Express",
   "engines": {
-    "node": "5.9.1"
+    "node": "8.11.3"
   },
   "main": "dist/index.js",
   "scripts": {
