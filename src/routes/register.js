@@ -42,9 +42,10 @@ export const register = (req, res) => {
 
     const token = assignToken({ email, password });
     createUser(email, encryptedPass).then(user => {
-      const emailId = getEmailId(user.email);
+      const { email, id } = user;
+      const emailId = getEmailId(email);
       saveUserToFirebase(emailId);
-      return res.status(201).send(user);
+      return res.status(201).send({ id, email });
     });
   });
 };
