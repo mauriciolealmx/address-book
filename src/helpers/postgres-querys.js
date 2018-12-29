@@ -2,7 +2,8 @@ import { Client } from 'pg';
 
 import config from '../../config';
 
-const connectionString = process.env.DATABASE_URL || config.connectionString;
+// DATABASE_URL env variable is set on the server.
+const connectionString = process.env.HEROKU_POSTGRESQL_CYAN_URL || config.connectionString;
 const client = new Client(connectionString);
 client.connect();
 
