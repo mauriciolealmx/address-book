@@ -84,6 +84,10 @@ ul li {
   list-style-type: none;
 }
 
+ul li span {
+  padding: 0 7px;
+}
+
 .contact-info {
   padding: 0px;
 }
