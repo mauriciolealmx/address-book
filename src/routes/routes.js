@@ -17,9 +17,7 @@ module.exports = (app, express) => {
    */
   // app.get('/', (req, res) => res.render('pages/index'));
 
-  app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-  });
+  app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'build', 'index.html')));
 
   /**
    *  Handling: Unauthorized users (Not logged in user or not registered user).
