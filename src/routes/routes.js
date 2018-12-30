@@ -6,6 +6,7 @@ import { login } from './login';
 import { register } from './register';
 import { remove } from './remove';
 import { retreive } from './retreive';
+import { removeUser } from './removeUser';
 
 module.exports = (app, express) => {
   const router = express.Router();
@@ -72,4 +73,11 @@ module.exports = (app, express) => {
    *  uri: '/users/:userId/contacts/:userContact'
    */
   app.put('/users/:userId/contacts', remove);
+
+  /**
+   *  Handling: Delete User
+   *  method: PUT
+   *  uri: '/users/:userId/contacts/:userContact'
+   */
+  app.put('/users/:userId', removeUser);
 };

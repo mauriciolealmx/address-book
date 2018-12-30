@@ -22,11 +22,7 @@ export const createUser = (email, encryptedPass) => {
     .catch(err => console.error(err.stack));
 };
 
-// TODO: Not tested
 export const deleteUser = email => {
   const queryString = `DELETE FROM users WHERE email='${email}'`;
-  return client
-    .query(queryString)
-    .then(res => res.rows[0])
-    .catch(err => console.error(err.stack));
+  return client.query(queryString).then(res => res.rowCount > 0);
 };
