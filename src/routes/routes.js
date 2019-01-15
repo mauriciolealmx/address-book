@@ -16,8 +16,6 @@ module.exports = (app, express) => {
    *  method: GET
    *  uri: '/'
    */
-  // app.get('/', (req, res) => res.render('pages/index'));
-
   app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'build', 'index.html')));
 
   /**

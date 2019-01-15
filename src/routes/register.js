@@ -37,7 +37,7 @@ export const register = (req, res) => {
   const encryptedPass = cipher(password, KEY);
   isEmailRegistered(email).then(isRegistered => {
     if (isRegistered) {
-      return res.status(400).send({ error: 'Email is already registered' });
+      return res.status(409).send({ error: 'Email is already registered' });
     }
 
     const token = assignToken({ email, password });
