@@ -60,14 +60,17 @@ var register = exports.register = function register(req, res) {
   var encryptedPass = (0, _cryptoUtils.cipher)(password, KEY);
   isEmailRegistered(email).then(function (isRegistered) {
     if (isRegistered) {
-      return res.status(400).send({ error: 'Email is already registered' });
+      return res.status(409).send({ error: 'Email is already registered' });
     }
 
     var token = (0, _jwtToken.assignToken)({ email: email, password: password });
     (0, _postgresQuerys.createUser)(email, encryptedPass).then(function (user) {
-      var emailId = getEmailId(user.email);
+      var email = user.email,
+          id = user.id;
+
+      var emailId = getEmailId(email);
       (0, _firebaseQuerys.saveUserToFirebase)(emailId);
-      return res.status(201).send(user);
+      return res.status(201).send({ id: id, email: email });
     });
   });
 };

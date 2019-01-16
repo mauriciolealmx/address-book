@@ -13,7 +13,8 @@ var _config2 = _interopRequireDefault(_config);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var connectionString = process.env.DATABASE_URL || _config2.default.connectionString;
+// DATABASE_URL env variable is set on the server.
+var connectionString = process.env.HEROKU_POSTGRESQL_CYAN_URL || _config2.default.connectionString;
 var client = new _pg.Client(connectionString);
 client.connect();
 
@@ -37,12 +38,9 @@ var createUser = exports.createUser = function createUser(email, encryptedPass) 
   });
 };
 
-// TODO: Not tested
 var deleteUser = exports.deleteUser = function deleteUser(email) {
   var queryString = 'DELETE FROM users WHERE email=\'' + email + '\'';
   return client.query(queryString).then(function (res) {
-    return res.rows[0];
-  }).catch(function (err) {
-    return console.error(err.stack);
+    return res.rowCount > 0;
   });
 };

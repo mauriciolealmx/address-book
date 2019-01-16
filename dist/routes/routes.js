@@ -1,16 +1,24 @@
 'use strict';
 
-var _jwtToken = require('../middlewares/jwt-token');
+var _path = require('path');
+
+var _path2 = _interopRequireDefault(_path);
 
 var _create = require('./create');
+
+var _jwtToken = require('../middlewares/jwt-token');
 
 var _login = require('./login');
 
 var _register = require('./register');
 
+var _remove = require('./remove');
+
 var _retreive = require('./retreive');
 
-var _remove = require('./remove');
+var _removeUser = require('./removeUser');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 module.exports = function (app, express) {
   var router = express.Router();
@@ -21,7 +29,7 @@ module.exports = function (app, express) {
    *  uri: '/'
    */
   app.get('/', function (req, res) {
-    return res.render('pages/index');
+    return res.sendFile(_path2.default.join(__dirname, '../../client-dist/build', 'clientIndex.html'));
   });
 
   /**
@@ -56,6 +64,10 @@ module.exports = function (app, express) {
    */
   app.post('/register', _register.register);
 
+  app.get('*', function (req, res) {
+    res.render('pages/404');
+  });
+
   /**
    *  Middleware: Check for valid jwt Token.
    */
@@ -81,4 +93,11 @@ module.exports = function (app, express) {
    *  uri: '/users/:userId/contacts/:userContact'
    */
   app.put('/users/:userId/contacts', _remove.remove);
+
+  /**
+   *  Handling: Delete User
+   *  method: PUT
+   *  uri: '/users/:userId/contacts/:userContact'
+   */
+  app.put('/users/:userId', _removeUser.removeUser);
 };

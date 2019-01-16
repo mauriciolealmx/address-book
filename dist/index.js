@@ -45,6 +45,8 @@ var usersRef = ref.child('users');
 var app = (0, _express2.default)();
 app.set('port', process.env.PORT || 5000);
 app.use(_express2.default.static(_path2.default.join(__dirname, '../public')));
+// React's build folder.
+app.use(_express2.default.static(_path2.default.join(__dirname, '../client-dist/build')));
 
 // view engine setup
 // views is directory for all template files

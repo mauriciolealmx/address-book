@@ -1,0 +1,28 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 20vmin;
+}
+
+.App-header {
+  background-color: #ffffff;
+  min-height: 91vh; /* TODO: This was 100vh - Should not be called App-header anymore */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: rgb(0, 0, 0);
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+h1 {
+  color: #4e4e4e;
+  font-size: 50px;
+}
