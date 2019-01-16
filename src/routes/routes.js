@@ -16,7 +16,7 @@ module.exports = (app, express) => {
    *  method: GET
    *  uri: '/'
    */
-  app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'build', 'index.html')));
+  app.get('/', (req, res) => res.sendFile(path.join(__dirname, '../../client-dist', 'clientIndex.html')));
 
   /**
    *  Handling: Unauthorized users (Not logged in user or not registered user).
@@ -45,6 +45,10 @@ module.exports = (app, express) => {
    *  uri: '/register'
    */
   app.post('/register', register);
+
+  app.get('*', (req, res) => {
+    res.render('pages/404')
+  })
 
   /**
    *  Middleware: Check for valid jwt Token.
