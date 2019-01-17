@@ -4,8 +4,7 @@ import capitalize from 'lodash/capitalize';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-
-import { getUserContacts } from './GetUsers';
+import { getUserContacts } from '../services';
 
 const getEmailId = email => email.split('@')[0];
 

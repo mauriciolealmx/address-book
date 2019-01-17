@@ -4,9 +4,7 @@ import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-function createAccount(user) {
-  return axios.post('/register', user).then(res => res.data);
-}
+import { createAccount } from '../services';
 
 const initialState = {
   email: '',

@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import capitalize from 'lodash/capitalize';
 import { style } from 'typestyle';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-import { getUserContacts } from './GetUsers';
+import { createContact, getUserContacts } from '../services';
 
 const styles = {
   textField: {
@@ -20,15 +19,6 @@ const styles = {
     margin: 'auto',
   }),
 };
-
-function createContact(userId, contact) {
-  return axios
-    .post(`/users/${userId}/contacts`, contact)
-    .then(res => res.data)
-    .catch(err => {
-      console.error(`Unable to create contact for ${userId}`, err.message);
-    });
-}
 
 const initialState = {
   contactEmail: '',

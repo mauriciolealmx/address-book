@@ -4,15 +4,7 @@ import axios from 'axios';
 import Button from '@material-ui/core/Button';
 
 import Contacts from './Contacts/Contacts';
-
-export function getUserContacts(userJwtToken, userId) {
-  return axios
-    .get(`/users/${userId}/contacts?token=${userJwtToken}`)
-    .then(res => res.data)
-    .catch(err => {
-      console.error(`Unable to get contact for ${userId}`, err.message);
-    });
-}
+import { getUserContacts } from '../services';
 
 export default class GetUsers extends Component {
   constructor(props) {
@@ -32,7 +24,7 @@ export default class GetUsers extends Component {
       });
     });
   }
-  
+
   render() {
     const { userContacts } = this.state;
     return (
