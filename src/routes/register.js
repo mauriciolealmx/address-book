@@ -1,7 +1,7 @@
 import config from '../../config';
+import pgClient from '../helpers/postgres-querys';
 import { assignToken } from '../middlewares/jwt-token';
 import { cipher } from '../helpers/crypto-utils';
-import { getUserByEmail, createUser } from '../helpers/postgres-querys';
 import { saveUserToFirebase } from '../helpers/firebase-querys';
 
 const IS_MISSING = 'is missing';
@@ -19,9 +19,10 @@ const isValidEmail = email => {
   return regex.test(email);
 };
 
-const isEmailRegistered = email => {
-  return getUserByEmail(email).then(result => result.length > 0);
-};
+const isEmailRegistered = (email, callback) =>
+  pgClient.getUserByEmail(email, (err, result) => {
+    return callback(result.length > 0);
+  });
 
 export const register = (req, res) => {
   const { email, password } = req.body;
@@ -35,13 +36,13 @@ export const register = (req, res) => {
   }
 
   const encryptedPass = cipher(password, KEY);
-  isEmailRegistered(email).then(isRegistered => {
+  isEmailRegistered(email, isRegistered => {
     if (isRegistered) {
       return res.status(409).send({ error: 'Email is already registered' });
     }
 
     const token = assignToken({ email, password });
-    createUser(email, encryptedPass).then(user => {
+    pgClient.createUser(email, encryptedPass, (err, user) => {
       const { email, id } = user;
       const emailId = getEmailId(email);
       saveUserToFirebase(emailId);
