@@ -1,9 +1,10 @@
 import * as admin from 'firebase-admin';
 import bodyParser from 'body-parser';
-import config from '../config';
 import cookieParser from 'cookie-parser';
 import express from 'express';
 import path from 'path';
+
+import config from '../config';
 import serviceAccount from '../address-book-b4923-firebase-adminsdk-70gx6-8382c02c12.json';
 
 admin.initializeApp({
@@ -12,24 +13,21 @@ admin.initializeApp({
 });
 
 const app = express();
-app.set('port', process.env.PORT || 5000);
-app.use(express.static(path.join(__dirname, '../public')));
-// React's build folder.
-app.use(express.static(path.join(__dirname, '../client-dist/build')));
 
-// view engine setup
-// views is directory for all template files
-app.set('views', path.join(__dirname, '../views'));
-app.set('view engine', 'ejs');
+// Set configurations.
+app.set('port', process.env.PORT || 5000);
 app.set('config', config);
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '../views'));
 
 // Middleware
-app.disable('x-powered-by');
+app.use(express.static(path.join(__dirname, '../public')));
+app.use(express.static(path.join(__dirname, '../client-dist/build')));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use((req, res, next) => {
-  // Make sure that the server accepts Cross Origin requests.
+  // Accept Cross Origin requests.
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
@@ -38,10 +36,12 @@ app.use((req, res, next) => {
 // Routes
 require('./routes/routes')(app, express);
 
-const server = app.listen(app.get('port'), () => {
+app.disable('x-powered-by');
+
+app.listen(app.get('port'), () => {
   if (!process.env.TESTING) {
     console.log('Node app is running on port', app.get('port'));
   }
 });
 
-module.exports = server;
+export default app;

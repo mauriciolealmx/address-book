@@ -2,7 +2,7 @@ import { Client } from 'pg';
 
 import config from '../../config';
 
-const connectionString = process.env.DATABASE_URL || config.connectionString;
+const connectionString = config.connectionString;
 const client = new Client(connectionString);
 client.connect();
 

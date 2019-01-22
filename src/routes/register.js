@@ -6,7 +6,7 @@ import { saveUserToFirebase } from '../helpers/firebase-querys';
 
 const IS_MISSING = 'is missing';
 const NOT_VALID = 'is not valid';
-const KEY = process.env.KEY || config.key;
+const KEY = config.key;
 
 const getEmailId = email => email.split('@')[0];
 

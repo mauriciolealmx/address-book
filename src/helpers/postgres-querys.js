@@ -2,8 +2,7 @@ import pg from 'pg';
 
 import config from '../../config';
 
-// DATABASE_URL env variable is set on the server.
-const connectionString = process.env.HEROKU_POSTGRESQL_CYAN_URL || config.connectionString;
+const connectionString = config.connectionString;
 
 function query(query, params, callback) {
   pg.connect(

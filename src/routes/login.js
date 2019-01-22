@@ -3,7 +3,7 @@ import pgClient from '../helpers/postgres-querys';
 import { assignToken } from '../middlewares/jwt-token';
 import { cipher } from '../helpers/crypto-utils';
 
-const KEY = process.env.KEY || config.key;
+const KEY = config.key;
 
 export const login = (req, res) => {
   const { email } = req.body;

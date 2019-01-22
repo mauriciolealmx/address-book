@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 
 import config from '../../config';
 
-const SECRET = process.env.JWT_SECRET || config.jwt_secret;
+const SECRET = config.jwt_secret;
 
 const isValidToken = (req, res, next) => {
   const { body, query, headers } = req;
