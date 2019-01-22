@@ -11,11 +11,6 @@ admin.initializeApp({
   databaseURL: config.databaseURL,
 });
 
-// Firebase.
-const db = admin.database();
-const ref = db.ref('address-book/data');
-const usersRef = ref.child('users');
-
 const app = express();
 app.set('port', process.env.PORT || 5000);
 app.use(express.static(path.join(__dirname, '../public')));
