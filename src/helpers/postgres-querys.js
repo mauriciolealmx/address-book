@@ -48,4 +48,25 @@ export default {
       return callback(err, result && result[0]);
     });
   },
+
+  // TODO: It has no consumer at the moment.
+  updateUser: function(email, properties, callback) {
+    var assigns = [];
+    var values = [];
+
+    // Currently only password can be updated.
+    if ('password' in properties) {
+      assigns.push('"password"=$' + (assigns.length + 1));
+      values.push(properties.password);
+    }
+    var updateQuery = [
+      'UPDATE users',
+      'SET ' + assigns.join(', '),
+      'WHERE email = $' + (assigns.length + 1),
+      'RETURNING *',
+    ];
+    query(updateQuery.join(' '), values.concat([email]), function(err, rows) {
+      callback(err, rows && rows[0]);
+    });
+  },
 };
