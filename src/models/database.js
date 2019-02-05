@@ -1,8 +1,8 @@
 import { Client } from 'pg';
 
-import config from '../../config';
+import app from '../index';
 
-const connectionString = config.connectionString;
+const connectionString = app.get('config').POSTGRESQL_URL;
 const client = new Client(connectionString);
 client.connect();
 

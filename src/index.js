@@ -3,19 +3,29 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import express from 'express';
 import path from 'path';
+import dotenv from 'dotenv';
 
-import config from '../config';
 import serviceAccount from '../address-book-b4923-firebase-adminsdk-70gx6-8382c02c12.json';
+
+dotenv.config();
+const { EXPIRES_IN, FIREBASE_URL, JWT_SECRET, KEY, PORT, TESTING, POSTGRESQL_URL } = process.env;
+const config = {
+  EXPIRES_IN,
+  JWT_SECRET,
+  KEY,
+  POSTGRESQL_URL,
+};
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: config.databaseURL,
+  databaseURL: FIREBASE_URL,
 });
 
-const app = express();
+// FIXME: There has to be a better way.
+const app = (module.exports = express());
 
 // Set configurations.
-app.set('port', process.env.PORT || 5000);
+app.set('port', PORT || 5000);
 app.set('config', config);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../views'));
@@ -39,9 +49,7 @@ require('./routes/routes')(app, express);
 app.disable('x-powered-by');
 
 app.listen(app.get('port'), () => {
-  if (!process.env.TESTING) {
+  if (!TESTING) {
     console.log('Node app is running on port', app.get('port'));
   }
 });
-
-export default app;

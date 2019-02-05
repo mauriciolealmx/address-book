@@ -1,8 +1,8 @@
 import pg from 'pg';
 
-import config from '../../config';
+import app from "../index";
 
-const connectionString = config.connectionString;
+const connectionString = app.get('config').POSTGRESQL_URL;
 
 function query(query, params, callback) {
   pg.connect(

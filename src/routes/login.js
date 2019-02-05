@@ -1,9 +1,9 @@
-import config from '../../config';
+import app from '../index';
 import pgClient from '../helpers/postgres-querys';
 import { assignToken } from '../middlewares/jwt-token';
 import { cipher } from '../helpers/crypto-utils';
 
-const KEY = config.key;
+const { KEY } = app.get('config');
 
 export const login = (req, res) => {
   const { email } = req.body;

@@ -1,4 +1,4 @@
-import config from '../../config';
+import app from '../index';
 import pgClient from '../helpers/postgres-querys';
 import { assignToken } from '../middlewares/jwt-token';
 import { cipher } from '../helpers/crypto-utils';
@@ -6,7 +6,7 @@ import { saveUserToFirebase } from '../helpers/firebase-querys';
 
 const IS_MISSING = 'is missing';
 const NOT_VALID = 'is not valid';
-const KEY = config.key;
+const { KEY } = app.get('config');
 
 const getEmailId = email => email.split('@')[0];
 
