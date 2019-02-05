@@ -64,10 +64,6 @@ module.exports = function (app, express) {
    */
   app.post('/register', _register.register);
 
-  app.get('*', function (req, res) {
-    res.render('pages/404');
-  });
-
   /**
    *  Middleware: Check for valid jwt Token.
    */

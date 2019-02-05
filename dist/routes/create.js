@@ -7,7 +7,6 @@ exports.create = undefined;
 
 var _firebaseQuerys = require('../helpers/firebase-querys');
 
-// TODO: User B should not be able to create contacts with user's A jwt Token.
 var create = exports.create = function create(req, res) {
   return (0, _firebaseQuerys.addContact)(req.params.userId, req.body).then(function (response) {
     if (response) {
