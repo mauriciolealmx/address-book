@@ -49,9 +49,17 @@ export default class CreateContact extends Component {
     };
 
     createContact(userId, contact).then(contact => {
+      let feedbackMessage;
+      if (!contact) {
+        feedbackMessage = `Contact ${contactName} already exists.`;
+        this.setState({
+          feedbackMessage,
+        });
+        return;
+      }
+      
       const { firstName } = contact;
-      const feedbackMessage = `User ${firstName} was added to ${userId}`;
-
+      feedbackMessage = `User ${firstName} was added to ${userId}`;
       getUserContacts(userJwtToken, userId).then(res => {
         updateContacts(res);
         this.setState({
