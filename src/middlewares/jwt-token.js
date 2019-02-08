@@ -5,13 +5,11 @@ import app from '../index';
 const { EXPIRES_IN, JWT_SECRET } = app.get('config');
 
 const isValidToken = (req, res, next) => {
-  const { body, query, headers } = req;
-  const token = body.token || query.token || headers['x-access-token'];
-
+  const { access_token } = req.cookies;
+  const token = access_token;
   if (token) {
     jwt.verify(token, JWT_SECRET, (err, decoded) => {
       if (err) {
-        console.log(err);
         return res.redirect('/login');
       } else {
         // If token is valid attach decoded to req for possible use in routes.
