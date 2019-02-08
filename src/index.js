@@ -31,8 +31,8 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../views'));
 
 // Middleware
-app.use(express.static(path.join(__dirname, '../public')));
-app.use(express.static(path.join(__dirname, '../client-dist/build')));
+app.use(express.static(path.join(__dirname, '../public'), { index: 'no-default' }));
+app.use(express.static(path.join(__dirname, '../client-dist/build'), { index: 'no-default' }));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
