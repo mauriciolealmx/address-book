@@ -32,8 +32,8 @@
     "ejs": "2.4.1",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
-    "firebase-admin": "^4.2.1",
-    "jsonwebtoken": "^7.3.0",
+    "firebase-admin": "^7.0.0",
+    "jsonwebtoken": "^8.4.0",
     "nock": "^9.0.13",
     "pg": "^6.1.2",
     "supertest": "^3.0.0"
