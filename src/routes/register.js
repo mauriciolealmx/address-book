@@ -45,8 +45,13 @@ export const register = (req, res) => {
     pgClient.createUser(email, encryptedPass, (err, user) => {
       const { email, id } = user;
       const emailId = getEmailId(email);
-      saveUserToFirebase(emailId);
-      return res.status(201).send({ id, email });
+      saveUserToFirebase(emailId, (err, user) => {
+        if (err) {
+          return res.status(400).send(err);
+        } else if (user) {
+          return res.status(201).send({ id, email });
+        }
+      });
     });
   });
 };
