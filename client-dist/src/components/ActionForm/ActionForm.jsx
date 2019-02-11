@@ -6,7 +6,7 @@ import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 
-import styles from '../App.styles';
+import styles from './actionForm.styles';
 
 // TODO: email validation.
 // const isValidEmail = email => {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import capitalize from 'lodash/capitalize';
 
-import ActionForm from './ActionFrom';
+import ActionForm from './ActionForm/ActionForm';
 import { getUserContacts, login } from '../services';
 
 const getEmailId = email => email.split('@')[0];

@@ -27,32 +27,35 @@ const initialState = {
 };
 
 export default class DeleteContact extends Component {
-  state = { ...initialState }
+  state = { ...initialState };
 
-  handleSubmit = () => {
+  handleSubmit = async () => {
     const { contactName, contactLastName } = this.state;
-    const { userId, updateContacts } = this.props;
+    const { userId } = this.props;
 
     const contact = {
       firstName: capitalize(contactName),
       lastName: capitalize(contactLastName),
     };
 
-    deleteContact(userId, contact).then(res => {
-      if (!res) {
-        this.setState({
-          feedbackMessage: 'Contact does not exist.',
-        });
-        return;
-      }
-
-      getUserContacts(userId).then(res => {
-        updateContacts(res);
-        this.setState({
-          ...initialState,
-        });
+    const resp = await deleteContact(userId, contact);
+    if (!resp) {
+      this.setState({
+        feedbackMessage: 'Contact does not exist.',
       });
+      return;
+    }
+
+    const contacts = await getUserContacts(userId);
+    this.setState({
+      ...initialState,
     });
+    this.updateAppState(contacts);
+  }
+
+  updateAppState = contacts => {
+    const { updateContacts } = this.props;
+    updateContacts(contacts);
   }
 
   handleChange(key, e) {

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import cloneDeep from 'lodash/cloneDeep';
 
-import Contacts from './components/Contacts/Contacts';
-import CreateContact from './components/CreateContact';
-import DeleteContact from './components/DeleteContact';
-import Header from './components/Header/Header';
-import Login from './components/Login';
-import Register from './components/Register';
+import Contacts from './Contacts/Contacts';
+import CreateContact from './CreateContact';
+import DeleteContact from './DeleteContact';
+import Header from './Header/Header';
+import Login from './Login';
+import Register from './Register';
 import './App.css';
 
 const initialState = {

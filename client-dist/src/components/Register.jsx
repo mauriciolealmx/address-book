@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import ActionForm from './ActionFrom';
+import ActionForm from './ActionForm/ActionForm';
 import { createAccount } from '../services';
 
 const initialState = {
