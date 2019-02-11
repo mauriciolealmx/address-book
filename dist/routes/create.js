@@ -8,15 +8,10 @@ exports.create = undefined;
 var _firebaseQuerys = require('../helpers/firebase-querys');
 
 var create = exports.create = function create(req, res) {
-  return (0, _firebaseQuerys.addContact)(req.params.userId, req.body).then(function (response) {
-    if (response) {
-      return res.status(201).send(response);
-    } else {
-      return res.status(404).send('Not Found');
-    }
-  }).catch(function (err) {
+  return (0, _firebaseQuerys.addContact)(req.params.userId, req.body, function (err, contactSnap) {
     if (err) {
-      return res.status(404).send(err);
+      return res.status(409).send(err);
     }
+    return res.status(201).send(contactSnap.val());
   });
 };

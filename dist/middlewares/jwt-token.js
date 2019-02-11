@@ -9,25 +9,23 @@ var _jsonwebtoken = require('jsonwebtoken');
 
 var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
 
-var _config = require('../../config');
+var _index = require('../index');
 
-var _config2 = _interopRequireDefault(_config);
+var _index2 = _interopRequireDefault(_index);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var SECRET = process.env.JWT_SECRET || _config2.default.jwt_secret;
+var _app$get = _index2.default.get('config'),
+    EXPIRES_IN = _app$get.EXPIRES_IN,
+    JWT_SECRET = _app$get.JWT_SECRET;
 
 var isValidToken = function isValidToken(req, res, next) {
-  var body = req.body,
-      query = req.query,
-      headers = req.headers;
+  var access_token = req.cookies.access_token;
 
-  var token = body.token || query.token || headers['x-access-token'];
-
+  var token = access_token;
   if (token) {
-    _jsonwebtoken2.default.verify(token, SECRET, function (err, decoded) {
+    _jsonwebtoken2.default.verify(token, JWT_SECRET, function (err, decoded) {
       if (err) {
-        console.log(err);
         return res.redirect('/login');
       } else {
         // If token is valid attach decoded to req for possible use in routes.
@@ -41,8 +39,8 @@ var isValidToken = function isValidToken(req, res, next) {
 };
 
 var assignToken = function assignToken(userCredentials) {
-  return _jsonwebtoken2.default.sign(userCredentials, SECRET, {
-    expiresIn: _config2.default.EXPIRES_IN
+  return _jsonwebtoken2.default.sign(userCredentials, JWT_SECRET, {
+    expiresIn: EXPIRES_IN
   });
 };
 

@@ -29,7 +29,7 @@ module.exports = function (app, express) {
    *  uri: '/'
    */
   app.get('/', function (req, res) {
-    return res.sendFile(_path2.default.join(__dirname, '../../client-dist/build', 'clientIndex.html'));
+    return res.sendFile(_path2.default.join(__dirname, '../../client-dist/build', 'index.html'));
   });
 
   /**

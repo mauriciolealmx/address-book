@@ -8,10 +8,6 @@ var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
-var _config = require('../config');
-
-var _config2 = _interopRequireDefault(_config);
-
 var _cookieParser = require('cookie-parser');
 
 var _cookieParser2 = _interopRequireDefault(_cookieParser);
@@ -24,6 +20,10 @@ var _path = require('path');
 
 var _path2 = _interopRequireDefault(_path);
 
+var _dotenv = require('dotenv');
+
+var _dotenv2 = _interopRequireDefault(_dotenv);
+
 var _addressBookB4923FirebaseAdminsdk70gx68382c02c = require('../address-book-b4923-firebase-adminsdk-70gx6-8382c02c12.json');
 
 var _addressBookB4923FirebaseAdminsdk70gx68382c02c2 = _interopRequireDefault(_addressBookB4923FirebaseAdminsdk70gx68382c02c);
@@ -32,47 +32,58 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
+_dotenv2.default.config();
+var _process$env = process.env,
+    EXPIRES_IN = _process$env.EXPIRES_IN,
+    FIREBASE_URL = _process$env.FIREBASE_URL,
+    JWT_SECRET = _process$env.JWT_SECRET,
+    KEY = _process$env.KEY,
+    PORT = _process$env.PORT,
+    TESTING = _process$env.TESTING,
+    POSTGRESQL_URL = _process$env.POSTGRESQL_URL;
+
+var config = {
+  EXPIRES_IN: EXPIRES_IN,
+  JWT_SECRET: JWT_SECRET,
+  KEY: KEY,
+  POSTGRESQL_URL: POSTGRESQL_URL
+};
+
 admin.initializeApp({
   credential: admin.credential.cert(_addressBookB4923FirebaseAdminsdk70gx68382c02c2.default),
-  databaseURL: _config2.default.databaseURL
+  databaseURL: FIREBASE_URL
 });
 
-// Firebase.
-var db = admin.database();
-var ref = db.ref('address-book/data');
-var usersRef = ref.child('users');
+// FIXME: There has to be a better way.
+var app = module.exports = (0, _express2.default)();
 
-var app = (0, _express2.default)();
-app.set('port', process.env.PORT || 5000);
-app.use(_express2.default.static(_path2.default.join(__dirname, '../public')));
-// React's build folder.
-app.use(_express2.default.static(_path2.default.join(__dirname, '../client-dist/build')));
-
-// view engine setup
-// views is directory for all template files
-app.set('views', _path2.default.join(__dirname, '../views'));
+// Set configurations.
+app.set('port', PORT || 5000);
+app.set('config', config);
 app.set('view engine', 'ejs');
-app.set('config', _config2.default);
+app.set('views', _path2.default.join(__dirname, '../views'));
 
 // Middleware
-app.disable('x-powered-by');
+app.use(_express2.default.static(_path2.default.join(__dirname, '../public'), { index: 'no-default' }));
+app.use(_express2.default.static(_path2.default.join(__dirname, '../client-dist/build'), { index: 'no-default' }));
 app.use((0, _cookieParser2.default)());
 app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: false }));
 app.use(function (req, res, next) {
-  // Make sure that the server accepts Cross Origin requests.
+  // Accept Cross Origin requests.
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT');
   next();
 });
 
 // Routes
 require('./routes/routes')(app, _express2.default);
 
-var server = app.listen(app.get('port'), function () {
-  if (!process.env.TESTING) {
+app.disable('x-powered-by');
+
+app.listen(app.get('port'), function () {
+  if (!TESTING) {
     console.log('Node app is running on port', app.get('port'));
   }
 });
-
-module.exports = server;

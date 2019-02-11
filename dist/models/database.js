@@ -2,13 +2,13 @@
 
 var _pg = require('pg');
 
-var _config = require('../../config');
+var _index = require('../index');
 
-var _config2 = _interopRequireDefault(_config);
+var _index2 = _interopRequireDefault(_index);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var connectionString = process.env.DATABASE_URL || _config2.default.connectionString;
+var connectionString = _index2.default.get('config').POSTGRESQL_URL;
 var client = new _pg.Client(connectionString);
 client.connect();
 

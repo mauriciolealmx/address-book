@@ -5,15 +5,17 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.register = undefined;
 
-var _config = require('../../config');
+var _index = require('../index');
 
-var _config2 = _interopRequireDefault(_config);
+var _index2 = _interopRequireDefault(_index);
+
+var _postgresQuerys = require('../helpers/postgres-querys');
+
+var _postgresQuerys2 = _interopRequireDefault(_postgresQuerys);
 
 var _jwtToken = require('../middlewares/jwt-token');
 
 var _cryptoUtils = require('../helpers/crypto-utils');
-
-var _postgresQuerys = require('../helpers/postgres-querys');
 
 var _firebaseQuerys = require('../helpers/firebase-querys');
 
@@ -21,7 +23,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var IS_MISSING = 'is missing';
 var NOT_VALID = 'is not valid';
-var KEY = process.env.KEY || _config2.default.key;
+
+var _app$get = _index2.default.get('config'),
+    KEY = _app$get.KEY;
 
 var getEmailId = function getEmailId(email) {
   return email.split('@')[0];
@@ -37,9 +41,9 @@ var isValidEmail = function isValidEmail(email) {
   return regex.test(email);
 };
 
-var isEmailRegistered = function isEmailRegistered(email) {
-  return (0, _postgresQuerys.getUserByEmail)(email).then(function (result) {
-    return result.length > 0;
+var isEmailRegistered = function isEmailRegistered(email, callback) {
+  return _postgresQuerys2.default.getUserByEmail(email, function (err, result) {
+    return callback(result.length > 0);
   });
 };
 
@@ -58,19 +62,24 @@ var register = exports.register = function register(req, res) {
   }
 
   var encryptedPass = (0, _cryptoUtils.cipher)(password, KEY);
-  isEmailRegistered(email).then(function (isRegistered) {
+  isEmailRegistered(email, function (isRegistered) {
     if (isRegistered) {
       return res.status(409).send({ error: 'Email is already registered' });
     }
 
     var token = (0, _jwtToken.assignToken)({ email: email, password: password });
-    (0, _postgresQuerys.createUser)(email, encryptedPass).then(function (user) {
+    _postgresQuerys2.default.createUser(email, encryptedPass, function (err, user) {
       var email = user.email,
           id = user.id;
 
       var emailId = getEmailId(email);
-      (0, _firebaseQuerys.saveUserToFirebase)(emailId);
-      return res.status(201).send({ id: id, email: email });
+      (0, _firebaseQuerys.saveUserToFirebase)(emailId, function (err, user) {
+        if (err) {
+          return res.status(400).send(err);
+        } else if (user) {
+          return res.status(201).send({ id: id, email: email });
+        }
+      });
     });
   });
 };
