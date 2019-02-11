@@ -17,8 +17,8 @@ export default class GetUsers extends Component {
   }
 
   handleSubmit() {
-    const { userJwtToken, userId } = this.props;
-    getUserContacts(userJwtToken, userId).then(res => {
+    const { userId } = this.props;
+    getUserContacts(userId).then(res => {
       this.setState({
         userContacts: res.data,
       });

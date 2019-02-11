@@ -39,18 +39,17 @@ export default class CreateContact extends Component {
 
   handleSubmit() {
     const { contactName, contactLastName, contactEmail } = this.state;
-    const { userJwtToken, userId, updateContacts } = this.props;
+    const { userId, updateContacts } = this.props;
 
     const contact = {
       email: contactEmail.toLowerCase(),
       firstName: capitalize(contactName),
       lastName: capitalize(contactLastName),
-      token: userJwtToken,
     };
 
-    createContact(userId, contact).then(contact => {
+    createContact(userId, contact).then(resp => {
       let feedbackMessage;
-      if (!contact) {
+      if (!resp) {
         feedbackMessage = `Contact ${contactName} already exists.`;
         this.setState({
           feedbackMessage,
@@ -60,7 +59,7 @@ export default class CreateContact extends Component {
       
       const { firstName } = contact;
       feedbackMessage = `User ${firstName} was added to ${userId}`;
-      getUserContacts(userJwtToken, userId).then(res => {
+      getUserContacts(userId).then(res => {
         updateContacts(res);
         this.setState({
           ...initialState,

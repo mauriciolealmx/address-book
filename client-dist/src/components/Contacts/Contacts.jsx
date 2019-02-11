@@ -10,14 +10,11 @@ import styles from './Contacts.styles';
 
 class VirtualizedTable extends React.PureComponent {
   headerHeight = 56;
+
   rowHeight = 56;
 
-  handleRowClick = rowData => {
-    console.log(rowData);
-  };
-
   getRowClassName = ({ index }) => {
-    const { rowClassName, onRowClick } = this.props;
+    const { rowClassName } = this.props;
     // Hover color will only show if rows have a onRowClick callback.
     return classNames(styles.tableRow, styles.flexContainer, rowClassName, {
       [styles.tableRowHover]: index !== -1 && this.handleRowClick,
@@ -55,7 +52,7 @@ class VirtualizedTable extends React.PureComponent {
     );
   };
 
-  columnRendered(columns) {
+  columnRendered = columns => {
     return columns.map(({ className, dataKey, ...other }, index) => (
       <Column
         key={dataKey}
@@ -97,8 +94,8 @@ class VirtualizedTable extends React.PureComponent {
   }
 }
 
-export default props => (
+export default ({ contacts }) => (
   <Paper className={styles.paperRoot}>
-    <VirtualizedTable contacts={props.contacts} />
+    <VirtualizedTable contacts={contacts} />
   </Paper>
 );
