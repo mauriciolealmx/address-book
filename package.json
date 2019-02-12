@@ -47,7 +47,7 @@
     "babel-register": "^6.24.1",
     "babel-watch": "^2.0.2",
     "dotenv": "^6.2.0",
-    "mocha": "^3.2.0",
+    "mocha": "^5.2.0",
     "nodemon": "^1.18.9",
     "rimraf": "^2.5.4"
   },
